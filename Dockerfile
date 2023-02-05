@@ -5,7 +5,7 @@ ENV COMMIT_HASH ${GIT_HASH}
 
 ENV TINI_VERSION v0.19.0
 RUN apt-get update \
-    && apt-get install gpg python -y \
+    && apt-get install gpg python3 -y \
     && apt-get clean
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tini.asc
