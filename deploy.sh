@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 git pull
 
 GIT_HASH=$(git rev-parse --short HEAD)
