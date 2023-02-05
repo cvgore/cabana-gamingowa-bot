@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git pull master
+git pull
 
 GIT_HASH=$(git rev-parse --short HEAD)
 
