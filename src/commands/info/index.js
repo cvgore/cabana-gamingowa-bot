@@ -1,5 +1,5 @@
 import {EmbedBuilder, SlashCommandBuilder} from "discord.js"
-import packageJSON from './../../../package.json'
+import packageJSON from './../../../package.json' assert {type: 'json'}
 import {COMMIT_HASH, STARTUP_DATE} from "../../env.js";
 import {formatRFC3339} from "date-fns";
 import discordJs from "discord.js";
