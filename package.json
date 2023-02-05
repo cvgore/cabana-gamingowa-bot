@@ -1,0 +1,35 @@
+{
+  "name": "cabana-gamingowa-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dałem z siebie 30pro aby tego bota zrobić",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js | pino-pretty",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint",
+    "format": "prettier -w src/**/*.js"
+  },
+  "keywords": [],
+  "author": "cvgore",
+  "license": "GPLv3-only",
+  "dependencies": {
+    "bufferutil": "^4.0.7",
+    "date-fns": "^2.29.3",
+    "debug": "^4.3.4",
+    "discord-api-types": "^0.37.31",
+    "discord.js": "^14.7.1",
+    "erlpack": "github:discord/erlpack",
+    "node-lmdb": "^0.9.7",
+    "pino": "^8.8.0",
+    "pino-debug": "^2.0.0",
+    "utf-8-validate": "^6.0.2",
+    "zlib-sync": "^0.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "pino-pretty": "^9.1.1",
+    "prettier": "^2.8.3"
+  }
+}
