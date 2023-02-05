@@ -21,4 +21,5 @@ podman run \
   -e DISCORD_GUILD_ID="$(cat ~/.config/cbb/discord_guild_id)" \
   -v ~/cabanagamingowabotdata:/app/storage \
   --name cabana-gamingowa-bot \
+  --security-opt=label=disable \
   localhost/cabana-gamingowa-bot
