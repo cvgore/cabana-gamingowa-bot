@@ -13,8 +13,6 @@ export const directory = path.join(
 
 logger.info(`DB location path: ${directory}`);
 
-if (mkdirRecursive())
-
 export const dbEnv = new lmdb.Env();
 
 dbEnv.open({
