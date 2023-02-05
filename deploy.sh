@@ -12,7 +12,7 @@ podman build \
   -t cabana-gamingowa-bot \
   .
 
-podman stop cabana-gamingowa-bot
+podman stop --ignore cabana-gamingowa-bot
 
 podman run \
   -d \
