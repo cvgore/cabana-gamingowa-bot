@@ -28,7 +28,7 @@ async function brbHandler(guildId, userId, job) {
     return removeBrbFromUser(user);
   }
 
-  const mins = differenceInMinutes(expectedAtDate, now);
+  const mins = differenceInMinutes(expectedAtDate, now, { roundingMethod: 'ceil' });
 
   await putBrbStatus(guildId, userId, getUnixTime(subMinutes(expectedAtDate, 1)));
 
