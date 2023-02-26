@@ -27,3 +27,9 @@ podman run \
   localhost/cabana-gamingowa-bot
 
 podman image prune -f
+
+podman container wait --condition running cabana-gamingowa-bot
+
+sleep 10
+
+podman healthcheck run cabana-gamingowa-bot

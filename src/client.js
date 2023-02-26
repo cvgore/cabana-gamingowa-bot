@@ -14,6 +14,15 @@ export const client = new Client({
 
 client.on('ready', () => {
     logger.info(`Logged in as ${client.user.tag}!`);
+
+    BOT_COMMANDS.forEach((cmd) => {
+        if ('voiceStateUpdateHandler' in cmd) {
+            client.on(
+              'voiceStateUpdate',
+              (...args) => cmd.voiceStateUpdateHandler(...args)
+            )
+        }
+    })
 });
 
 async function handleChatInputCommand(interaction) {
@@ -114,15 +123,6 @@ client.on('interactionCreate', async (interaction) => {
         return
     }
 });
-
-BOT_COMMANDS.forEach((cmd) => {
-    if ('voiceStateUpdateHandler' in cmd) {
-        client.on(
-          'voiceStateUpdate',
-          (...args) => cmd.voiceStateUpdateHandler(...args)
-        )
-    }
-})
 
 export async function init() {
     await client.login(TOKEN);

@@ -40,3 +40,5 @@ COPY --from=make-app /tini /tini
 
 ENTRYPOINT ["/tini", "--"]
 CMD ["npm", "start"]
+
+HEALTHCHECK CMD curl http://localhost:14587 || exit 1
