@@ -36,7 +36,7 @@ async function brbHandler(guildId, userId) {
       `brb:update(mins=${mins})`
     );
   } catch (ex) {
-    logger.warn(`failed to update brb status for ${userId}`, ex);
+    logger.warn(`failed to update brb status for ${userId}: %j`, ex);
   }
 }
 
