@@ -3,11 +3,8 @@ import {
 } from "discord.js";
 import discordJs from 'discord.js';
 import { userInputError, userSuccess } from "../../core/response.js";
-import { getBrbStatus, putBrbStatus, removeBrbStatus } from "../../db/brb.js";
-import { addToScheduleBrb } from "../../scheduler/brb.js";
-import { addMinutes, differenceInSeconds, fromUnixTime, getSeconds, getUnixTime, isAfter, isPast } from "date-fns";
-import { unzzzifyNickname, zzzifyNickname } from "../../core/helpers.js";
-import { logger } from "../../logger.js";
+import { getBrbStatus, removeBrbStatus } from "../../db/brb.js";
+import { fromUnixTime, isPast } from "date-fns";
 import { removeBrbFromUser } from "../../core/brb.js";
 
 export const definition = new SlashCommandSubcommandBuilder()
@@ -40,7 +37,7 @@ export const handler = async (interaction) => {
 
   await interaction.reply({
     content: userSuccess(
-      `"${userMention(interaction.user.id)} już nie jest zw`
+      `${userMention(interaction.user.id)} już nie jest zw`
     ),
   })
 }

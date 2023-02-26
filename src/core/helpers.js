@@ -93,7 +93,7 @@ export const zzzifyNickname = (nick, mins) => {
 
 export const unzzzifyNickname = (nick) => {
   if (ZZZIFY_PATTERN.test(nick)) {
-    return ZZZIFY_PATTERN.exec(nick).groups[1].trim();
+    return ZZZIFY_PATTERN.exec(nick)[1].trim();
   }
 
   if (nick.startsWith(ZZZ_EMOJI)) {

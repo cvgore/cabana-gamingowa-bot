@@ -10,12 +10,12 @@ export const definition = new SlashCommandBuilder()
     .setName('losuj-gracza')
     .setDescription('wybierz losowo gracza z kanału')
     .addChannelOption((opt) => opt
-        .setName('channel')
-         .setDescription('kanał z jakiego pobrać członków')
-        .setRequired(true)
-        .addChannelTypes(
+      .setName('channel')
+      .setDescription('kanał z jakiego pobrać członków')
+      .setRequired(true)
+      .addChannelTypes(
             ChannelType.GuildText
-                | ChannelType.GuildVoice
+            | ChannelType.GuildVoice
         )
     )
 

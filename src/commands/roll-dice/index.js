@@ -10,13 +10,12 @@ export const definition = new SlashCommandBuilder()
     .setName('kostka')
     .setDescription('ciulnij kostką (niesymetryczną) - min <= N <= max')
     .addNumberOption((opt) => opt
-        .setName('min')
+      .setName('min')
       .setDescription('minimalna wartość')
     )
     .addNumberOption((opt) => opt
-        .setName('max')
+      .setName('max')
       .setDescription('maksymalna wartość')
-
     )
 
 /**

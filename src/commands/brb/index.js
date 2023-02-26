@@ -39,7 +39,7 @@ export const handler = async (interaction) => {
   const replySuccess = async (expectedTime) => {
     await interaction.reply({
       content: userSuccess(
-        `ustawiono zw "${userMention(interaction.user.id)} na "${mins}" minut - kończy się o "${time(expectedTime)}"`
+        `ustawiono zw ${userMention(interaction.user.id)} na "${mins}" minut - kończy się o ${time(expectedTime)}`
       ),
     })
   }
