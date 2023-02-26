@@ -5,7 +5,7 @@ import discordJs from 'discord.js';
 import { userInputError, userSuccess } from "../../core/response.js";
 import { getBrbStatus, putBrbStatus } from "../../db/brb.js";
 import { addToScheduleBrb } from "../../scheduler/brb.js";
-import { addMinutes, fromUnixTime, getUnixTime, isAfter } from "date-fns";
+import { addMinutes, fromUnixTime, getUnixTime, isAfter, set } from "date-fns";
 import { setBrbToUser } from "../../core/brb.js";
 import debugCtor from "debug";
 
@@ -50,7 +50,10 @@ export const handler = async (interaction) => {
   )
 
   const now = new Date()
-  const expectedTime = addMinutes(now, mins)
+  const expectedTime = set(addMinutes(now, mins), {
+    seconds: 0,
+    milliseconds: 0,
+  });
   const guildMember = await interaction.guild.members.fetch(interaction.user.id)
 
   if (brbEndsAt === null || isAfter(now, fromUnixTime(brbEndsAt))) {
