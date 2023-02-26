@@ -8,6 +8,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Allow rsa priv key
+        shell: echo 'CASignatureAlgorithms +ssh-rsa' >> /etc/ssh/sshd_config.d/90-allow-rsa
       - name: Deploy using ssh
         uses: appleboy/ssh-action@c1965ddd2563844fddc1ec01cafc798365706143
         with:
