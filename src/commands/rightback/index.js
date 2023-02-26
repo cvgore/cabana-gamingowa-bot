@@ -25,7 +25,7 @@ export const handler = async (interaction) => {
   )
 
   if (brbEndsAt === null || isPast(fromUnixTime(brbEndsAt))) {
-    await interaction.reply({
+    return interaction.reply({
       content: userInputError(
         `nie jesteś przecież zw`
       ),

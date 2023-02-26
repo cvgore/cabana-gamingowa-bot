@@ -7,6 +7,10 @@ import { getBrbStatus, putBrbStatus } from "../../db/brb.js";
 import { addToScheduleBrb } from "../../scheduler/brb.js";
 import { addMinutes, fromUnixTime, getUnixTime, isAfter } from "date-fns";
 import { setBrbToUser } from "../../core/brb.js";
+import debugCtor from "debug";
+
+const debug = debugCtor("cmd:brb");
+
 
 export const definition = new SlashCommandSubcommandBuilder()
   .setName('zw')
@@ -51,12 +55,13 @@ export const handler = async (interaction) => {
 
 
   if (brbEndsAt === null || isAfter(now, fromUnixTime(brbEndsAt))) {
+    debug("set brb - missing entry or outdated");
+
     await putBrbStatus(interaction.guildId, interaction.user.id, getUnixTime(expectedTime))
     addToScheduleBrb(interaction.guildId, interaction.user.id, expectedTime)
     await setBrbToUser(guildMember, mins)
 
-    await replySuccess(getUnixTime(expectedTime))
-    return
+    return replySuccess(getUnixTime(expectedTime))
   }
 
   if (mins < 1) {

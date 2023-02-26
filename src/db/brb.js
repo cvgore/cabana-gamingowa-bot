@@ -18,7 +18,7 @@ export function getBrbStatus(guildId, userId) {
 
   tx.commit();
 
-  return Number.isSafeInteger(value) ? value : null;
+  return value;
 }
 
 /**
