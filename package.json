@@ -5,10 +5,13 @@
   "description": "Dałem z siebie 30pro aby tego bota zrobić",
   "main": "src/index.js",
   "type": "module",
+  "engines": {
+    "node": "^16"
+  },
   "scripts": {
     "start": "node src/index.js --experimental-json-modules",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint",
+    "lint": "eslint src/**/*.js",
     "format": "prettier -w src/**/*.js"
   },
   "keywords": [],
@@ -22,6 +25,7 @@
     "discord.js": "^14.7.1",
     "erlpack": "github:discord/erlpack",
     "node-lmdb": "^0.9.7",
+    "node-schedule": "^2.1.1",
     "pino": "^8.8.0",
     "pino-debug": "^2.0.0",
     "utf-8-validate": "^6.0.2",

@@ -27,7 +27,7 @@ export const emojifyNumberWithPadding = (num, targetLen) => {
   const paddedNumStr = num.toString().padStart(targetLen, "?");
 
   return paddedNumStr
-    .replaceAll("?", `⏹️`)
+    .replaceAll("?", `🟦`)
     .replace(`${num}`, emojifyNumber(num));
 };
 
@@ -73,4 +73,32 @@ export const EMOJIS_DICTIONARY = {
   "*": "*️⃣",
   "!": "❗",
   "?": "❓",
+};
+
+export const ZZZ_EMOJI = "💤";
+
+export const ZZZIFY_PATTERN = /^💤\d{1,3}m (.*)$/;
+
+export const zzzifyNickname = (nick, mins) => {
+  if (ZZZIFY_PATTERN.test(nick)) {
+    return nick;
+  }
+
+  if (nick.length <= 26) {
+    return `${ZZZ_EMOJI}${mins}m ${nick}`;
+  }
+
+  return nick;
+};
+
+export const unzzzifyNickname = (nick) => {
+  if (ZZZIFY_PATTERN.test(nick)) {
+    return ZZZIFY_PATTERN.exec(nick).groups[1].trim();
+  }
+
+  if (nick.startsWith(ZZZ_EMOJI)) {
+    return nick.slice(ZZZ_EMOJI.length).trim();
+  }
+
+  return nick;
 };

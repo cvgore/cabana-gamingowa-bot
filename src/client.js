@@ -8,7 +8,7 @@ import debugCtor from "debug";
 
 const debug = debugCtor('client')
 
-const client = new Client({
+export const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
 
@@ -114,6 +114,15 @@ client.on('interactionCreate', async (interaction) => {
         return
     }
 });
+
+BOT_COMMANDS.forEach((cmd) => {
+    if ('voiceStateUpdateHandler' in cmd) {
+        client.on(
+          'voiceStateUpdate',
+          (...args) => cmd.voiceStateUpdateHandler(...args)
+        )
+    }
+})
 
 export async function init() {
     await client.login(TOKEN);

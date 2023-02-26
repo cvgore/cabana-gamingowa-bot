@@ -25,3 +25,13 @@ export const badRankingCreditsDatabase = dbEnv.openDbi({
   name: "badRankings",
   create: true,
 });
+
+export const brbDatabase = dbEnv.openDbi({
+  name: "brb",
+  create: true,
+});
+
+export const mutedDatabase = dbEnv.openDbi({
+  name: "muted",
+  create: true,
+});

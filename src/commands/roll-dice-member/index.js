@@ -34,8 +34,8 @@ export const handler = async (interaction) => {
         })
     }
 
-    let value = await randomInt(0, members.size)
     const keys = members.keys()
+    let value = await randomInt(0, members.size + 1)
     while (--value > 0) {
         keys.next()
     }

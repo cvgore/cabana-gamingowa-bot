@@ -7,7 +7,7 @@ import {userError, userSuccess} from "../../core/response.js"
 import {randomUUID} from 'crypto'
 
 export const definition = new SlashCommandSubcommandBuilder()
-    .setName('dodaj')
+    .setName('nowy')
     .setDescription('nowiuśki bad ranking')
     .addStringOption((opt) => opt
         .setName('name')
