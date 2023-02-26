@@ -53,7 +53,6 @@ export const handler = async (interaction) => {
   const expectedTime = addMinutes(now, mins)
   const guildMember = await interaction.guild.members.fetch(interaction.user.id)
 
-
   if (brbEndsAt === null || isAfter(now, fromUnixTime(brbEndsAt))) {
     debug("set brb - missing entry or outdated");
 

@@ -26,9 +26,9 @@ async function brbHandler(guildId, userId) {
     return removeBrbFromUser(user);
   }
 
-  const mins = differenceInMinutes(expectedAt, now);
+  const mins = differenceInMinutes(fromUnixTime(expectedAt), now);
 
-  await putBrbStatus(guildId, userId, subMinutes(expectedAt, 1).valueOf());
+  await putBrbStatus(guildId, userId, subMinutes(fromUnixTime(expectedAt), 1).valueOf());
 
   try {
     await user.setNickname(
