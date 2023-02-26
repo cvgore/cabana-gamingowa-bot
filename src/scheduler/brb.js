@@ -6,7 +6,7 @@ import { unzzzifyNickname, zzzifyNickname } from "../core/helpers.js";
 import {
   differenceInMinutes,
   fromUnixTime, getUnixTime,
-  isAfter,
+  isAfter, set,
   subMinutes
 } from "date-fns";
 import { removeBrbFromUser } from "../core/brb.js";
@@ -15,22 +15,26 @@ import debugCtor from "debug";
 const debug = debugCtor("scheduler:brb");
 
 async function brbHandler(guildId, userId, job) {
-  const expectedAt = await getBrbStatus(guildId, userId);
-  const expectedAtDate = fromUnixTime(expectedAt);
+  const expectedAtTs = await getBrbStatus(guildId, userId);
+  const expectedAtDate = fromUnixTime(expectedAtTs);
   const now = new Date();
   const guild = await client.guilds.fetch(guildId);
   const user = await guild.members.fetch(userId);
+  const mins = differenceInMinutes(
+    expectedAtDate,
+    set(now, {seconds: 0, milliseconds: 0})
+  );
+  const newMins = getUnixTime(subMinutes(expectedAtDate, 1))
 
-  if (expectedAt === null || isAfter(now, expectedAtDate)) {
+  if (expectedAtTs === null || isAfter(now, expectedAtDate) || mins === 0) {
     debug("force-remove brb - missing entry or outdated");
 
     job.cancel();
     return removeBrbFromUser(user);
   }
 
-  const mins = differenceInMinutes(expectedAtDate, now);
 
-  await putBrbStatus(guildId, userId, getUnixTime(subMinutes(expectedAtDate, 1)));
+  await putBrbStatus(guildId, userId, newMins);
 
   try {
     await user.setNickname(

@@ -8,6 +8,7 @@ import { addToScheduleBrb } from "../../scheduler/brb.js";
 import { addMinutes, fromUnixTime, getUnixTime, isAfter, set } from "date-fns";
 import { setBrbToUser } from "../../core/brb.js";
 import debugCtor from "debug";
+import { emojifyNumber } from "../../core/helpers.js";
 
 const debug = debugCtor("cmd:brb");
 
@@ -36,10 +37,16 @@ export const handler = async (interaction) => {
     });
   }
 
+  if (mins <= 1) {
+    return interaction.reply({
+      content: userInputError('zw musi być większa od 1'),
+    });
+  }
+
   const replySuccess = async (expectedTime) => {
     await interaction.reply({
       content: userSuccess(
-        `ustawiono zw ${userMention(interaction.user.id)} na "${mins}" minut - kończy się o ${time(expectedTime)}`
+        `ustawiono zw ${userMention(interaction.user.id)} na ${emojifyNumber(mins)} minut - kończy się o ${time(expectedTime)}`
       ),
     })
   }
@@ -48,30 +55,28 @@ export const handler = async (interaction) => {
     interaction.guildId,
     interaction.user.id
   )
+  const brbEndsAtDate = fromUnixTime(brbEndsAt)
 
   const now = new Date()
   const expectedTime = set(addMinutes(now, mins), {
     seconds: 0,
     milliseconds: 0,
   });
+  const expectedTimeTs = getUnixTime(expectedTime)
   const guildMember = await interaction.guild.members.fetch(interaction.user.id)
 
-  if (brbEndsAt === null || isAfter(now, fromUnixTime(brbEndsAt))) {
+  if (brbEndsAt === null || isAfter(now, brbEndsAtDate)) {
     debug("set brb - missing entry or outdated");
 
-    await putBrbStatus(interaction.guildId, interaction.user.id, getUnixTime(expectedTime))
+    await putBrbStatus(interaction.guildId, interaction.user.id, expectedTimeTs)
     addToScheduleBrb(interaction.guildId, interaction.user.id, expectedTime)
     await setBrbToUser(guildMember, mins)
 
-    return replySuccess(getUnixTime(expectedTime))
+    return replySuccess(expectedTimeTs)
   }
 
-  if (mins < 1) {
-    return interaction.reply({
-      content: userInputError('aktualizacja zw musi być większa od 1'),
-    });
-  }
-
-  await putBrbStatus(interaction.guildId, interaction.user.id, getUnixTime(expectedTime))
+  await putBrbStatus(interaction.guildId, interaction.user.id, expectedTimeTs)
   await setBrbToUser(guildMember, mins)
+
+  return replySuccess(expectedTimeTs)
 }
