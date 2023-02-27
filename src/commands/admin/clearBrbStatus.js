@@ -11,6 +11,7 @@ export const definition = new SlashCommandSubcommandBuilder()
   .setDescription('remove BRB status from user')
   .addUserOption((opt) => opt
     .setName('user')
+    .setDescription('user to remove from BRB status')
     .setRequired(true)
   )
 
