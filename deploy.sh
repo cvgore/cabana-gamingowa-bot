@@ -10,6 +10,7 @@ podman build \
   --build-arg=GIT_HASH="${GIT_HASH}" \
   -f Dockerfile \
   -t cabana-gamingowa-bot \
+  --format=docker \
   .
 
 podman stop --ignore cabana-gamingowa-bot
