@@ -4,7 +4,7 @@ import * as clearBrbStatus from "./clearBrbStatus.js"
 export const definition = new SlashCommandBuilder()
   .setName('admin')
   .setDescription('kałcion')
-  .setDefaultMemberPermissions(0)
+  .setDefaultMemberPermissions('0')
 
 export const subcommands = [
   clearBrbStatus
