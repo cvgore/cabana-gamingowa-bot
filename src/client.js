@@ -18,7 +18,7 @@ client.on('ready', () => {
     debug('registering gateway handlers')
     BOT_COMMANDS.forEach((cmd) => {
         if ('voiceStateUpdateHandler' in cmd) {
-            debug('registering voiceStateUpdateHandler for %j', cmd.name)
+            debug('registering voiceStateUpdateHandler for %j', cmd.definition.name)
 
             client.on(
               'voiceStateUpdate',
@@ -27,7 +27,7 @@ client.on('ready', () => {
         }
 
         if ('presenceUpdateHandler' in cmd) {
-            debug('registering presenceUpdateHandler for %j', cmd.name)
+            debug('registering presenceUpdateHandler for %j', cmd.definition.name)
 
             client.on(
               'presenceUpdate',
