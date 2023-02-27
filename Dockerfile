@@ -38,7 +38,7 @@ COPY --chown=node:node . /app
 COPY --from=make-app /app/node_modules /app/node_modules
 COPY --from=make-app /tini /tini
 
-HEALTHCHECK CMD curl http://localhost:14587 || exit 1
+HEALTHCHECK CMD echo 'let F=require("node-fetch");F("http://localhost:14587").then(x=>x.text().then(y=>console.log(y))).catch(x=>process.exit(1))' | node
 
 ENTRYPOINT ["/tini", "--"]
 

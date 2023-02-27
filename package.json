@@ -24,6 +24,7 @@
     "discord-api-types": "^0.37.31",
     "discord.js": "^14.7.1",
     "erlpack": "github:discord/erlpack",
+    "node-fetch": "^3.3.0",
     "node-lmdb": "^0.9.7",
     "node-schedule": "^2.1.1",
     "pino": "^8.8.0",

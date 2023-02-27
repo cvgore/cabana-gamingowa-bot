@@ -19,6 +19,8 @@ podman rm --ignore cabana-gamingowa-bot
 
 podman run \
   -d \
+  -e DEBUG=* \
+  -e LOG_LEVEL=debug \
   -e DISCORD_TOKEN="$(cat ~/.config/cbb/discord_token)" \
   -e DISCORD_CLIENT_ID="$(cat ~/.config/cbb/discord_client_id)" \
   -e DISCORD_GUILD_ID="$(cat ~/.config/cbb/discord_guild_id)" \
@@ -30,7 +32,7 @@ podman run \
 
 podman container wait --condition running cabana-gamingowa-bot
 
-sleep 10
+sleep 20
 
 podman healthcheck run cabana-gamingowa-bot
 
