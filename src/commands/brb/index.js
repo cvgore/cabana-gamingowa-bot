@@ -96,9 +96,14 @@ export const handler = async (interaction) => {
 */
 export const autocompleteHandler =  async (interaction) => {
   const now = new Date()
+  const rawValue = interaction.options.getFocused() || '0'
+  const value = parseInt(rawValue, 10)
+  const allOffsets = value && !isNaN(value) && isFinite(value) && value > 0
+    ? [value,...BRB_TIME_OFFSETS]
+    : BRB_TIME_OFFSETS
 
   await interaction.respond(
-    BRB_TIME_OFFSETS
+    allOffsets
       .map((minsAdd) => {
         const offsetDate = addMinutes(now, minsAdd)
         const timeString = format(offsetDate, 'kk:mm')
