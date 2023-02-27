@@ -10,7 +10,15 @@ import debugCtor from "debug";
 
 const debug = debugCtor("commands:register");
 
-const commands = [badRankings, rollDice, rollDiceMember, info, brb, rightback, admin];
+const commands = [
+  badRankings,
+  rollDice,
+  rollDiceMember,
+  info,
+  brb,
+  rightback,
+  admin,
+];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {
     const subcommands = new Map();

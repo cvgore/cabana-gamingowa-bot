@@ -1,13 +1,14 @@
 import { scheduleJob } from "node-schedule";
-import { getBrbStatus, putBrbStatus } from "../db/brb.js";
+import { getBrbStatus } from "../db/brb.js";
 import { client } from "../client.js";
 import { logger } from "../logger.js";
 import { unzzzifyNickname, zzzifyNickname } from "../core/helpers.js";
 import {
   differenceInMinutes,
-  fromUnixTime, getUnixTime,
-  isAfter, set,
-  subMinutes
+  fromUnixTime,
+  isAfter,
+  isEqual,
+  set,
 } from "date-fns";
 import { removeBrbFromUser } from "../core/brb.js";
 import debugCtor from "debug";
@@ -22,19 +23,20 @@ async function brbHandler(guildId, userId, job) {
   const user = await guild.members.fetch(userId);
   const mins = differenceInMinutes(
     expectedAtDate,
-    set(now, {seconds: 0, milliseconds: 0})
+    set(now, { seconds: 0, milliseconds: 0 })
   );
-  const newMins = getUnixTime(subMinutes(expectedAtDate, 1))
 
-  if (expectedAtTs === null || isAfter(now, expectedAtDate) || mins === 0) {
+  if (
+    expectedAtTs === null ||
+    isAfter(now, expectedAtDate) ||
+    isEqual(now, expectedAtDate) ||
+    mins === 0
+  ) {
     debug("force-remove brb - missing entry or outdated");
 
     job.cancel();
     return removeBrbFromUser(user);
   }
-
-
-  await putBrbStatus(guildId, userId, newMins);
 
   try {
     await user.setNickname(
