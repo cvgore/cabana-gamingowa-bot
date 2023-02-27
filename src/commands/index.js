@@ -4,12 +4,13 @@ import * as rollDiceMember from "./roll-dice-member/index.js";
 import * as info from "./info/index.js";
 import * as brb from "./brb/index.js";
 import * as rightback from "./rightback/index.js";
+import * as admin from "./admin/index.js";
 import { Collection } from "discord.js";
 import debugCtor from "debug";
 
 const debug = debugCtor("commands:register");
 
-const commands = [badRankings, rollDice, rollDiceMember, info, brb, rightback];
+const commands = [badRankings, rollDice, rollDiceMember, info, brb, rightback, admin];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {
     const subcommands = new Map();

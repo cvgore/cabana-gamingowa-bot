@@ -1,7 +1,5 @@
 import {SlashCommandBuilder} from "discord.js"
-import * as view from "./view.js"
-import * as add from "./add.js"
-import * as put from "./put.js"
+import * as clearBrbStatus from "./clearBrbStatus.js"
 
 export const definition = new SlashCommandBuilder()
   .setName('admin')
@@ -9,7 +7,5 @@ export const definition = new SlashCommandBuilder()
   .setDefaultMemberPermissions(0)
 
 export const subcommands = [
-  view,
-  add,
-  put
+  clearBrbStatus
 ]
