@@ -28,8 +28,12 @@ podman run \
 
 podman container wait --condition running cabana-gamingowa-bot
 
-sleep 10
-
 podman healthcheck run cabana-gamingowa-bot
 
+sleep 10
+
+set +e
+
 podman image prune -f
+
+set -e

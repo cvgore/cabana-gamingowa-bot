@@ -38,7 +38,8 @@ COPY --chown=node:node . /app
 COPY --from=make-app /app/node_modules /app/node_modules
 COPY --from=make-app /tini /tini
 
-ENTRYPOINT ["/tini", "--"]
-CMD ["npm", "start"]
-
 HEALTHCHECK CMD curl http://localhost:14587 || exit 1
+
+ENTRYPOINT ["/tini", "--"]
+
+CMD ["npm", "start"]
