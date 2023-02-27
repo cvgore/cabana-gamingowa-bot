@@ -30,9 +30,9 @@ podman run \
 
 podman container wait --condition running cabana-gamingowa-bot
 
-podman healthcheck run cabana-gamingowa-bot
-
 sleep 10
+
+podman healthcheck run cabana-gamingowa-bot
 
 set +e
 
