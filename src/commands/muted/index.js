@@ -52,7 +52,7 @@ export const handler = async (interaction) => {
  * @param {discordJs.VoiceState} oldState
  * @return {Promise<void>}
  */
-export const voiceStateUpdateHandler = async ([oldState, newState]) => {
+export const voiceStateUpdateHandler = async (oldState, newState) => {
   const user = newState.member.user
 
   if (user.bot || user.system) {
