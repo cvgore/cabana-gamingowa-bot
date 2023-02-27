@@ -1,5 +1,4 @@
-
-const database = {}
+const database = {};
 function makeKey(guildId, userId) {
   return `${guildId}::${userId}`;
 }
@@ -10,7 +9,7 @@ function makeKey(guildId, userId) {
  * @return {number|null}
  */
 export function getLastMutedAt(guildId, userId) {
-  const value = database[makeKey(guildId, userId)] ?? null
+  const value = database[makeKey(guildId, userId)] ?? null;
 
   return Number.isSafeInteger(value) ? value : null;
 }
@@ -21,7 +20,7 @@ export function getLastMutedAt(guildId, userId) {
  * @param {number} value
  */
 export function putLastMutedAt(guildId, userId, value) {
-  database[makeKey(guildId, userId)] = value
+  database[makeKey(guildId, userId)] = value;
 }
 
 /**
@@ -29,5 +28,5 @@ export function putLastMutedAt(guildId, userId, value) {
  * @param {string} userId
  */
 export function removeLastMutedAt(guildId, userId) {
-  delete database[makeKey(guildId, userId)]
+  delete database[makeKey(guildId, userId)];
 }

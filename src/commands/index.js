@@ -19,7 +19,7 @@ const commands = [
   brb,
   rightback,
   admin,
-  muted
+  muted,
 ];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {

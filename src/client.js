@@ -15,8 +15,11 @@ export const client = new Client({
 client.on('ready', () => {
     logger.info(`Logged in as ${client.user.tag}!`);
 
+    debug('registering gateway handlers')
     BOT_COMMANDS.forEach((cmd) => {
         if ('voiceStateUpdateHandler' in cmd) {
+            debug('registering voiceStateUpdateHandler for %j', cmd.name)
+
             client.on(
               'voiceStateUpdate',
               (...args) => cmd.voiceStateUpdateHandler(...args)
@@ -24,6 +27,8 @@ client.on('ready', () => {
         }
 
         if ('presenceUpdateHandler' in cmd) {
+            debug('registering presenceUpdateHandler for %j', cmd.name)
+
             client.on(
               'presenceUpdate',
               (...args) => cmd.presenceUpdateHandler(...args)
