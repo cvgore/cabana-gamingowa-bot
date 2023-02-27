@@ -1,16 +1,20 @@
 import {
-  SlashCommandSubcommandBuilder, time, userMention
+  SlashCommandBuilder, time, userMention
 } from "discord.js";
 import discordJs from 'discord.js';
-import {userSuccess} from "../../core/response.js"
-import { getBrbStatus } from "../../db/brb.js";
+import { userInputError } from "../../core/response.js";
+import { getLastMutedAt, putLastMutedAt, removeLastMutedAt } from "../../db/muted.js";
+import { getUnixTime } from "date-fns";
+import debugCtor from "debug";
 
-export const definition = new SlashCommandSubcommandBuilder()
+const debug = debugCtor('cmd:muted')
+
+export const definition = new SlashCommandBuilder()
   .setName('ile-lurkuje')
   .setDescription('daj info ile czasu już ta osoba lurkuje')
   .addUserOption((opt) => opt
     .setName('user')
-    .setDescription('kogo zeskanować')
+    .setDescription('kogo zeskanować laserem piu piu piu')
     .setRequired(true)
   )
 
@@ -21,22 +25,26 @@ export const definition = new SlashCommandSubcommandBuilder()
 export const handler = async (interaction) => {
   const user = interaction.options.getUser('user', true);
 
-  const replySuccess = async (mins, expectedTime) => {
-    await interaction.reply({
-      content: userSuccess(
-        `ustawiono zw "${userMention(interaction.user.id)} na "${mins}" minut - kończy się o "${time(expectedTime)}"`
+  const lastMutedAt = await getLastMutedAt(
+    interaction.guildId,
+    user.id
+  )
+
+  if (lastMutedAt === null) {
+    return interaction.reply({
+      content: userInputError(
+        `${userMention(user.id)} nie jest wyciszony`
       ),
+      ephemeral: true,
     })
   }
 
-  const brbEndsAt = await getBrbStatus(
-    interaction.guildId,
-    interaction.user.id
-  )
-
-  if (brbEndsAt === null) {
-    await replySuccess(mins, expectedTime)
-  }
+  return interaction.reply({
+    content: userInputError(
+      `${userMention(user.id)} jest wyciszony od ${time(lastMutedAt, 'R')} (${time(lastMutedAt)})`
+    ),
+    ephemeral: true
+  })
 }
 
 /**
@@ -45,10 +53,24 @@ export const handler = async (interaction) => {
  * @return {Promise<void>}
  */
 export const voiceStateUpdateHandler = async ([oldState, newState]) => {
-  const previous = newState.selfMute || newState.selfDeaf
-  const current = oldState.selfMute || oldState.selfDeaf
+  const user = newState.member.user
+  const isBot = user.bot
+  const isSystem = user.system
 
-  if (previous !== current) {
+  if (isBot || isSystem) {
+    debug('skipped voiceStateUpdateHandler due to bot or system user')
+    return
+  }
 
+  const currentlyMuted = oldState.selfMute || oldState.selfDeaf
+
+  if (currentlyMuted) {
+    debug(`user ${user.id} is muted, updating`)
+
+    const now = new Date()
+    putLastMutedAt(newState.guild.id, user.id, getUnixTime(now))
+  } else {
+    debug(`user ${user.id} is unmuted, removing`)
+    removeLastMutedAt(newState.guild.id, user.id,)
   }
 }

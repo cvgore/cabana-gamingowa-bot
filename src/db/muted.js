@@ -1,5 +1,5 @@
-import { mutedDatabase, dbEnv } from "./index.js";
 
+const database = {}
 function makeKey(guildId, userId) {
   return `${guildId}::${userId}`;
 }
@@ -10,13 +10,7 @@ function makeKey(guildId, userId) {
  * @return {number|null}
  */
 export function getLastMutedAt(guildId, userId) {
-  const tx = dbEnv.beginTxn();
-
-  const value = tx.getNumber(mutedDatabase, makeKey(guildId, userId), {
-    keyIsString: true,
-  });
-
-  tx.commit();
+  const value = database[makeKey(guildId, userId)] ?? null
 
   return Number.isSafeInteger(value) ? value : null;
 }
@@ -27,11 +21,13 @@ export function getLastMutedAt(guildId, userId) {
  * @param {number} value
  */
 export function putLastMutedAt(guildId, userId, value) {
-  const tx = dbEnv.beginTxn();
+  database[makeKey(guildId, userId)] = value
+}
 
-  tx.putNumber(mutedDatabase, makeKey(guildId, userId), value, {
-    keyIsString: true,
-  });
-
-  tx.commit();
+/**
+ * @param {string} guildId
+ * @param {string} userId
+ */
+export function removeLastMutedAt(guildId, userId) {
+  delete database[makeKey(guildId, userId)]
 }

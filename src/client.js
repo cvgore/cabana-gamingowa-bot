@@ -22,6 +22,13 @@ client.on('ready', () => {
               (...args) => cmd.voiceStateUpdateHandler(...args)
             )
         }
+
+        if ('presenceUpdateHandler' in cmd) {
+            client.on(
+              'presenceUpdate',
+              (...args) => cmd.presenceUpdateHandler(...args)
+            )
+        }
     })
 });
 

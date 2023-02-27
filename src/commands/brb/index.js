@@ -1,5 +1,5 @@
 import {
-  SlashCommandSubcommandBuilder, time, userMention
+  SlashCommandBuilder, time, userMention
 } from "discord.js";
 import discordJs from 'discord.js';
 import { userInputError, userSuccess } from "../../core/response.js";
@@ -19,7 +19,7 @@ const BRB_TIME_OFFSETS = [
 
 const debug = debugCtor("cmd:brb");
 
-export const definition = new SlashCommandSubcommandBuilder()
+export const definition = new SlashCommandBuilder()
   .setName('zw')
   .setDescription('ustaw zaraz wracam')
   .addNumberOption((opt) => opt

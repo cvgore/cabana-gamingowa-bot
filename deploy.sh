@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export BUILDAH_FORMAT=docker
+
 set -e
 
 git pull
@@ -10,7 +12,6 @@ podman build \
   --build-arg=GIT_HASH="${GIT_HASH}" \
   -f Dockerfile \
   -t cabana-gamingowa-bot \
-  --format=docker \
   .
 
 podman stop --ignore cabana-gamingowa-bot
@@ -38,3 +39,5 @@ set +e
 podman image prune -f
 
 set -e
+
+export BUILDAH_FORMAT=
