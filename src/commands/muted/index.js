@@ -2,7 +2,7 @@ import {
   SlashCommandBuilder, time, userMention
 } from "discord.js";
 import discordJs from 'discord.js';
-import { userInputError } from "../../core/response.js";
+import { userInputError, userSuccess } from "../../core/response.js";
 import { getLastMutedAt, putLastMutedAt, removeLastMutedAt } from "../../db/muted.js";
 import { getUnixTime } from "date-fns";
 import debugCtor from "debug";
@@ -40,18 +40,18 @@ export const handler = async (interaction) => {
   }
 
   return interaction.reply({
-    content: userInputError(
+    content: userSuccess(
       `${userMention(user.id)} jest wyciszony od ${time(lastMutedAt, 'R')} (${time(lastMutedAt)})`
     ),
     ephemeral: true
   })
 }
-
 /**
  * @param {discordJs.VoiceState} newState
  * @param {discordJs.VoiceState} oldState
  * @return {Promise<void>}
  */
+
 export const voiceStateUpdateHandler = async (oldState, newState) => {
   const user = newState.member.user
 
@@ -60,7 +60,7 @@ export const voiceStateUpdateHandler = async (oldState, newState) => {
     return
   }
 
-  const currentlyMuted = oldState.selfMute || oldState.selfDeaf
+  const currentlyMuted = newState.selfMute || newState.selfDeaf
 
   if (currentlyMuted) {
     debug(`user ${user.id} is muted, updating`)
