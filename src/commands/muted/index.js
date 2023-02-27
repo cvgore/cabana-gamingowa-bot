@@ -60,6 +60,12 @@ export const voiceStateUpdateHandler = async (oldState, newState) => {
     return
   }
 
+  if (oldState.channelId && !newState.channelId) {
+    debug(`user ${user.id} left channel, removing`)
+    removeLastMutedAt(newState.guild.id, user.id)
+    return
+  }
+
   const currentlyMuted = newState.selfMute || newState.selfDeaf
 
   if (currentlyMuted) {
@@ -69,6 +75,6 @@ export const voiceStateUpdateHandler = async (oldState, newState) => {
     putLastMutedAt(newState.guild.id, user.id, getUnixTime(now))
   } else {
     debug(`user ${user.id} is unmuted, removing`)
-    removeLastMutedAt(newState.guild.id, user.id,)
+    removeLastMutedAt(newState.guild.id, user.id)
   }
 }
