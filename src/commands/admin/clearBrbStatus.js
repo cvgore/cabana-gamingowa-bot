@@ -20,8 +20,8 @@ export const definition = new SlashCommandSubcommandBuilder()
  * @return {Promise<void>}
  */
 export const handler = async (interaction) => {
-  const user = interaction.options.getUser('name', true);
-  const member = interaction.options.getMember('name');
+  const user = interaction.options.getUser('user', true);
+  const member = interaction.options.getMember('user');
 
   await removeBrbFromUser(member)
   await removeBrbStatus(interaction.guildId, user.id)
