@@ -5,13 +5,19 @@ import discordJs from 'discord.js';
 import { userInputError, userSuccess } from "../../core/response.js";
 import { getBrbStatus, putBrbStatus } from "../../db/brb.js";
 import { addToScheduleBrb } from "../../scheduler/brb.js";
-import { addMinutes, fromUnixTime, getUnixTime, isAfter, set } from "date-fns";
+import { addMinutes, format, fromUnixTime, getUnixTime, isAfter, set } from "date-fns";
 import { setBrbToUser } from "../../core/brb.js";
 import debugCtor from "debug";
 import { emojifyNumber } from "../../core/helpers.js";
 
-const debug = debugCtor("cmd:brb");
+const BRB_TIME_OFFSETS = [
+  5, 10, 15, 20,
+  30,
+  45, 60,
+  90
+]
 
+const debug = debugCtor("cmd:brb");
 
 export const definition = new SlashCommandSubcommandBuilder()
   .setName('zw')
@@ -21,6 +27,7 @@ export const definition = new SlashCommandSubcommandBuilder()
     .setDescription('ile minut zw')
     .setMinValue(1)
     .setMaxValue(999)
+    .setAutocomplete(true)
     .setRequired(true)
   )
 
@@ -34,12 +41,14 @@ export const handler = async (interaction) => {
   if (!Number.isSafeInteger(mins)) {
     return interaction.reply({
       content: userInputError('mins musi być liczbą całkowitą'),
+      ephemeral: true,
     });
   }
 
   if (mins <= 1) {
     return interaction.reply({
       content: userInputError('zw musi być większa od 1'),
+      ephemeral: true,
     });
   }
 
@@ -79,4 +88,24 @@ export const handler = async (interaction) => {
   await setBrbToUser(guildMember, mins)
 
   return replySuccess(expectedTimeTs)
+}
+
+/**
+* @param {discordJs.AutocompleteInteraction} interaction
+* @return {Promise<void>}
+*/
+export const autocompleteHandler =  async (interaction) => {
+  const now = new Date()
+
+  await interaction.respond(
+    BRB_TIME_OFFSETS
+      .map((minsAdd) => {
+        const offsetDate = addMinutes(now, minsAdd)
+        const timeString = format(offsetDate, 'kk:mm')
+        return {
+          value: minsAdd,
+          name: `${timeString} (${minsAdd} minut)`
+        }
+      })
+  )
 }
