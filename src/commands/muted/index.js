@@ -54,10 +54,8 @@ export const handler = async (interaction) => {
  */
 export const voiceStateUpdateHandler = async ([oldState, newState]) => {
   const user = newState.member.user
-  const isBot = user.bot
-  const isSystem = user.system
 
-  if (isBot || isSystem) {
+  if (user.bot || user.system) {
     debug('skipped voiceStateUpdateHandler due to bot or system user')
     return
   }

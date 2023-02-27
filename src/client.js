@@ -9,7 +9,7 @@ import debugCtor from "debug";
 const debug = debugCtor('client')
 
 export const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildPresences]
 });
 
 client.on('ready', () => {
