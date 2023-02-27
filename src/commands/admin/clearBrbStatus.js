@@ -7,7 +7,7 @@ import { removeBrbFromUser } from "../../core/brb.js";
 import { removeBrbStatus } from "../../db/brb.js";
 
 export const definition = new SlashCommandSubcommandBuilder()
-  .setName('clearBrbStatus')
+  .setName('clear-brb-tatus')
   .setDescription('remove BRB status from user')
   .addUserOption((opt) => opt
     .setName('user')
