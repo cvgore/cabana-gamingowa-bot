@@ -1,5 +1,3 @@
-import { P } from "pino";
-
 export const getNumericIncrementalValue = (baseValue, numStr) => {
   const hasSign = numStr.endsWith("+") || numStr.endsWith("-");
   const value = parseInt(hasSign ? numStr.slice(0, -1) : numStr);
