@@ -164,7 +164,13 @@ client.on('interactionCreate', async (interaction) => {
     if (
         !interaction.isChatInputCommand()
         && !interaction.isAutocomplete()
+        && !interaction.isButton()
     ) return
+
+    if (interaction.isButton()) {
+        await handleButtonInteraction(interaction);
+        return
+    }
 
     if (interaction.isChatInputCommand()) {
         await handleChatInputCommand(interaction);
@@ -173,11 +179,6 @@ client.on('interactionCreate', async (interaction) => {
 
     if (interaction.isAutocomplete()) {
         await handleAutocomplete(interaction);
-        return
-    }
-
-    if (interaction.isButton()) {
-        await handleButtonInteraction(interaction);
         return
     }
 });
