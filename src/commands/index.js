@@ -6,6 +6,7 @@ import * as brb from "./brb/index.js";
 import * as rightback from "./rightback/index.js";
 import * as admin from "./admin/index.js";
 import * as muted from "./muted/index.js";
+import * as remind from "./remind/index.js";
 import { Collection } from "discord.js";
 import debugCtor from "debug";
 
@@ -20,6 +21,7 @@ const commands = [
   rightback,
   admin,
   muted,
+  remind,
 ];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {
