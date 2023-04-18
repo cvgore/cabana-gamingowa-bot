@@ -109,18 +109,19 @@ export const unzzzifyNickname = (nick) => {
  * @param params {{[key: string]: string}}
  * @return {string}
  */
-export const createCustomIdShortInvocation = (action, params) => {
-  return new URL(`x:${action}?${new URLSearchParams(Object.entries(params))}`).toString();
+export const createCustomIdShortInvocation = (cmd, action, params) => {
+  return new URL(`${cmd}:${action}?${new URLSearchParams(Object.entries(params))}`).toString();
 }
 
 export const parseCustomIdShortInvocation = (customId) => {
   const url = new URL(customId);
 
-  if (!url || url.protocol !== 'x:') {
+  if (!url) {
     return null;
   }
 
   return {
+    commandName: url.protocol.slice(0, url.protocol.length - 1),
     action: url.pathname,
     params: Object.fromEntries(Array.from(url.searchParams.entries()))
   }

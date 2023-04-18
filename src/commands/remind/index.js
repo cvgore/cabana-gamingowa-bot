@@ -39,7 +39,11 @@ export const definition = new SlashCommandBuilder()
     .setDescription('czego chcesz?')
     .setMaxLength(128)
     .setRequired(false)
-  )
+  );
+
+export const extras = [
+  'buttonInteractionHandler'
+]
 
 /**
  * @param {discordJs.Interaction} interaction
@@ -69,7 +73,7 @@ export const handler = async (interaction) => {
       .addComponents(
         new ButtonBuilder()
         .setCustomId(
-          createCustomIdShortInvocation('cancel', { id: remindId })
+          createCustomIdShortInvocation(definition.name, 'cancel', { id: remindId })
         )
         .setLabel('Anuluj przypominajkę')
         .setStyle(ButtonStyle.Danger)
@@ -79,7 +83,7 @@ export const handler = async (interaction) => {
     if (what) {
       return interaction.reply({
         content: userSuccess(
-          `ustawiono przypominajke - za ${emojifyNumber(mins)} minut czyli o godzinie ${time(expectedTime, 'T')} przypomne ci o:\n` +
+          `ustawiono przypominajke - za ${emojifyNumber(mins)} minut czyli o godzinie ${time(expectedTime, 'T')} przypomne ci o:\n\n` +
           `${quote(what)}`
         ),
         ephemeral,

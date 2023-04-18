@@ -5,6 +5,7 @@ import {BOT_COMMANDS} from "./commands/index.js";
 import {fatalError, invalidCommand} from "./core/response.js";
 import {logger} from "./logger.js";
 import debugCtor from "debug";
+import { parseCustomIdShortInvocation } from "./core/helpers.js";
 
 const debug = debugCtor('client')
 
@@ -120,38 +121,25 @@ async function handleAutocomplete(interaction) {
 }
 
 async function handleButtonInteraction(interaction) {
-    if (!BOT_COMMANDS.has(interaction.commandName)) {
+    const invocation = parseCustomIdShortInvocation(interaction.customId);
+
+    if (!invocation) {
+        return;
+    }
+
+    debug('lookup %o invocation', interaction.customId);
+
+    const {commandName} = invocation;
+
+    if (!BOT_COMMANDS.has(commandName)) {
         await interaction.reply({ content: invalidCommand(), ephemeral: true })
         return
     }
 
-    const command = BOT_COMMANDS.get(interaction.commandName)
-    const subcommandName = interaction.options.getSubcommand(false)
-
-    debug('lookup %o cmd / %o subCmd', interaction.commandName, subcommandName)
-
-    if (command.subcommands.size === 0 || !subcommandName) {
-        try {
-            await command.buttonInteractionHandler(interaction)
-        } catch (ex) {
-            logger.error(`error during command invocation ${ex}`)
-            debug(ex)
-            await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
-            return
-        }
-
-        return
-    }
-
-    if (! command.subcommands.has(subcommandName)) {
-        await interaction.reply({ content: invalidCommand(), ephemeral: true })
-        return
-    }
-
-    const subcommand = command.subcommands.get(subcommandName)
+    const command = BOT_COMMANDS.get(commandName)
 
     try {
-        await subcommand.buttonInteractionHandler(interaction)
+        await command.buttonInteractionHandler(interaction)
     } catch (ex) {
         logger.error(`error during command invocation ${ex}`)
         debug(ex)

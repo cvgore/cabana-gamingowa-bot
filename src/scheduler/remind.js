@@ -54,8 +54,8 @@ async function remindHandler() {
       debug('invoking reminder for %j', {data});
       return client.users.send(data.userId, {
         content: userAttention(
-          `ty ${getRandomAbusiveWordDirectToUser()}! pamiętaj o\n`
-          + `${quote(data.what)}`
+          `ty ${getRandomAbusiveWordDirectToUser()}! pamiętaj o\n\n`
+          + `${quote(data.what || '..czymś ale nie wiem o czym bo chuju nie zdradziłeś żadnych szczegółów')}`
         )
       });
     }
