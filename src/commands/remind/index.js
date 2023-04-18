@@ -145,6 +145,8 @@ export const autocompleteHandler =  async (interaction) => {
  * @return {Promise<void>}
  */
 export const buttonInteractionHandler = async (interaction) => {
+  debug('got button interaction %j', { customId: interaction.customId });
+
   const invocation = parseCustomIdShortInvocation(interaction.customId);
 
   if (!invocation || !['cancel'].includes(invocation.action)) {
@@ -158,9 +160,10 @@ export const buttonInteractionHandler = async (interaction) => {
   }
 
   const list = getRemindList(interaction.guildId, interaction.user.id);
+  const remindData = list.find(x => x.id === invocation.params.id);
 
-  if (!list.find(x => x.id === invocation.params.id)) {
-    return interaction.followUp({
+  if (!remindData) {
+    return interaction.reply({
       content: userInputError('ta przypominajka już wygasła lub nie istnieje'),
       ephemeral: true,
     });
@@ -168,8 +171,8 @@ export const buttonInteractionHandler = async (interaction) => {
 
   popRemindList(interaction.guildId, interaction.user.id, invocation.params.id);
 
-  return interaction.followUp({
-    content: userCancelled('anulowano tą przypominajkę!'),
+  return interaction.reply({
+    content: userCancelled(`anulowano przypominajkę, która miała być o godzinie ${time(remindData.time, 'T')}!`),
     ephemeral: true,
   });
 }
