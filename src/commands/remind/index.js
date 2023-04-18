@@ -70,7 +70,7 @@ export const handler = async (interaction) => {
         .setCustomId(
           createCustomIdShortInvocation('cancel', { id: remindId })
         )
-        .setLabel('Anuluj')
+        .setLabel('Anuluj przypominajkę')
         .setStyle(ButtonStyle.Danger)
       );
     const components = [row];
@@ -102,7 +102,7 @@ export const handler = async (interaction) => {
   });
   const remindAtDateMs = getUnixTime(remindAtDate)
 
-  pushRemindList(
+  const remindId = pushRemindList(
     interaction.guildId,
     interaction.user.id,
     {
@@ -111,7 +111,7 @@ export const handler = async (interaction) => {
     }
   );
 
-  return replySuccess(remindAtDateMs);
+  return replySuccess(remindAtDateMs, what, remindId);
 }
 
 /**

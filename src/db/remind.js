@@ -41,18 +41,21 @@ export function getRemindList(guildId, userId) {
  * @param {string} guildId
  * @param {string} userId
  * @param {Omit<RemindListEntry, 'id'>} value
+ * @return {string} id
  */
 export function pushRemindList(guildId, userId, value) {
   const key = makeKey(guildId, userId);
-
+  const id = randomUUID();
   if (!Array.isArray(database[key])) {
     database[key] = [];
     keys[key] = true;
   }
   database[key].push({
     ...value,
-    id: randomUUID(),
+    id,
   });
+
+  return id;
 }
 
 /**
