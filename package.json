@@ -22,7 +22,7 @@
     "date-fns": "^2.29.3",
     "debug": "^4.3.4",
     "discord-api-types": "^0.37.31",
-    "discord.js": "^14.7.1",
+    "discord.js": "^14.9.0",
     "erlpack": "github:discord/erlpack",
     "node-fetch": "^3.3.0",
     "node-lmdb": "^0.9.7",
