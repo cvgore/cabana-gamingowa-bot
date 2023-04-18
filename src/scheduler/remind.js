@@ -25,7 +25,7 @@ async function remindHandler() {
 
   for (const [key, remindListEntries] of Object.entries(entries)) {
     if (!remindListEntries) {
-      debug('empty list for %c', {key});
+      debug('empty list for %j', {key});
       continue;
     }
 
@@ -36,7 +36,7 @@ async function remindHandler() {
         isAfter(now, entry.time) ||
         isEqual(now, entry.time)
       ) {
-        debug('will invoke reminder for %c', {entry});
+        debug('will invoke reminder for %j', {entry});
 
         invokeReminderList.push({
           ...entry,
@@ -50,8 +50,8 @@ async function remindHandler() {
   }
 
   const promiseList = invokeReminderList.map((data) => {
-    return () => {
-      debug('invoking reminder for %c', {data});
+    return async () => {
+      debug('invoking reminder for %j', {data});
       return client.users.send(data.userId, {
         content: userAttention(
           `ty ${getRandomAbusiveWordDirectToUser()}! pamiętaj o\n`
@@ -62,9 +62,9 @@ async function remindHandler() {
   });
 
   return Promise.allSettled(
-    promiseList
+    promiseList.map(x => x())
   ).catch((err) => {
-    logger.error(`failed to send reminder`, err);
+    logger.error(`failed to send reminder %j`, err);
   });
 }
 
