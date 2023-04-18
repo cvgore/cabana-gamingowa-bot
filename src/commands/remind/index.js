@@ -10,6 +10,7 @@ import debugCtor from "debug";
 import { createCustomIdShortInvocation, emojifyNumber, parseCustomIdShortInvocation } from "../../core/helpers.js";
 import { getRemindList, popRemindList, pushRemindList } from "../../db/remind.js";
 import { logger } from "../../logger.js";
+import { runRemindScheduler } from "../../scheduler/remind.js";
 
 const REMIND_TIME_OFFSETS = [
   2, 3, 4,
@@ -172,3 +173,5 @@ export const buttonInteractionHandler = async (interaction) => {
     ephemeral: true,
   });
 }
+
+runRemindScheduler();

@@ -77,6 +77,3 @@ export function runRemindScheduler() {
 
   scheduleJob(schedule, () => remindHandler());
 }
-
-// noinspection JSUnusedLocalSymbols
-const instance = runRemindScheduler();
