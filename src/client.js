@@ -119,6 +119,47 @@ async function handleAutocomplete(interaction) {
     }
 }
 
+async function handleButtonInteraction(interaction) {
+    if (!BOT_COMMANDS.has(interaction.commandName)) {
+        await interaction.reply({ content: invalidCommand(), ephemeral: true })
+        return
+    }
+
+    const command = BOT_COMMANDS.get(interaction.commandName)
+    const subcommandName = interaction.options.getSubcommand(false)
+
+    debug('lookup %o cmd / %o subCmd', interaction.commandName, subcommandName)
+
+    if (command.subcommands.size === 0 || !subcommandName) {
+        try {
+            await command.buttonInteractionHandler(interaction)
+        } catch (ex) {
+            logger.error(`error during command invocation ${ex}`)
+            debug(ex)
+            await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
+            return
+        }
+
+        return
+    }
+
+    if (! command.subcommands.has(subcommandName)) {
+        await interaction.reply({ content: invalidCommand(), ephemeral: true })
+        return
+    }
+
+    const subcommand = command.subcommands.get(subcommandName)
+
+    try {
+        await subcommand.buttonInteractionHandler(interaction)
+    } catch (ex) {
+        logger.error(`error during command invocation ${ex}`)
+        debug(ex)
+        await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
+        return
+    }
+}
+
 client.on('interactionCreate', async (interaction) => {
     if (
         !interaction.isChatInputCommand()
@@ -132,6 +173,11 @@ client.on('interactionCreate', async (interaction) => {
 
     if (interaction.isAutocomplete()) {
         await handleAutocomplete(interaction);
+        return
+    }
+
+    if (interaction.isButton()) {
+        await handleButtonInteraction(interaction);
         return
     }
 });

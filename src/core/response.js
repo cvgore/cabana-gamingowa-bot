@@ -15,6 +15,20 @@ export const userSuccess = (msg) => {
 /**
  * @param {string} msg
  */
+export const userAttention = (msg) => {
+  return `❣️ ${msg}`;
+};
+
+/**
+ * @param {string} msg
+ */
+export const userCancelled = (msg) => {
+  return `😿 yhyhyhy! ${msg}`;
+};
+
+/**
+ * @param {string} msg
+ */
 export const userInputError = (msg) => {
   return `💢 ty głupku jebany ty! ${msg}`;
 };

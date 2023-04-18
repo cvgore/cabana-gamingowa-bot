@@ -1,3 +1,5 @@
+import { P } from "pino";
+
 export const getNumericIncrementalValue = (baseValue, numStr) => {
   const hasSign = numStr.endsWith("+") || numStr.endsWith("-");
   const value = parseInt(hasSign ? numStr.slice(0, -1) : numStr);
@@ -102,3 +104,26 @@ export const unzzzifyNickname = (nick) => {
 
   return nick;
 };
+
+/**
+ * only plain values supported with no special chars except -_
+ * @param action {string}
+ * @param params {{[key: string]: string}}
+ * @return {string}
+ */
+export const createCustomIdShortInvocation = (action, params) => {
+  return new URL(`x:${action}?${new URLSearchParams(Object.entries(params))}`).toString();
+}
+
+export const parseCustomIdShortInvocation = (customId) => {
+  const url = new URL(customId);
+
+  if (!url || url.protocol !== 'x:') {
+    return null;
+  }
+
+  return {
+    action: url.pathname,
+    params: Object.fromEntries(Array.from(url.searchParams.entries()))
+  }
+}

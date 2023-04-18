@@ -25,7 +25,7 @@ export const definition = new SlashCommandBuilder()
   .addNumberOption((opt) => opt
     .setName('mins')
     .setDescription('ile minut zw')
-    .setMinValue(1)
+    .setMinValue(2)
     .setMaxValue(999)
     .setAutocomplete(true)
     .setRequired(true)
