@@ -1,8 +1,7 @@
-import {
+import discordJs, {
   SlashCommandBuilder, time, userMention
-} from "discord.js";
-import discordJs from 'discord.js';
-import { userInputError, userSuccess } from "../../core/response.js";
+} from 'discord.js';
+import { respondWithResult, userInputError, userSuccess } from "../../core/response.js";
 import { getBrbStatus, putBrbStatus } from "../../db/brb.js";
 import { addToScheduleBrb } from "../../scheduler/brb.js";
 import { addMinutes, format, fromUnixTime, getUnixTime, isAfter, set } from "date-fns";
@@ -39,24 +38,29 @@ export const handler = async (interaction) => {
   const mins = interaction.options.getNumber('mins', true);
 
   if (!Number.isSafeInteger(mins)) {
-    return interaction.reply({
-      content: userInputError('mins musi być liczbą całkowitą'),
-      ephemeral: true,
+    return respondWithResult({
+      interaction,
+      result: false,
+      msgFail: userInputError('mins musi być liczbą całkowitą')
     });
   }
 
   if (mins <= 1) {
-    return interaction.reply({
-      content: userInputError('zw musi być większa od 1'),
-      ephemeral: true,
+    return respondWithResult({
+      interaction,
+      result: false,
+      msgFail: userInputError('zw musi być większa od 1')
     });
   }
 
   const replySuccess = async (expectedTime) => {
-    await interaction.reply({
-      content: userSuccess(
+    return respondWithResult({
+      interaction,
+      result: true,
+      msgOk: userSuccess(
         `ustawiono zw ${userMention(interaction.user.id)} na ${emojifyNumber(mins)} minut - kończy się o ${time(expectedTime)}`
       ),
+      hidden: false
     })
   }
 
@@ -102,7 +106,7 @@ export const autocompleteHandler =  async (interaction) => {
     ? [value,...BRB_TIME_OFFSETS]
     : BRB_TIME_OFFSETS
 
-  await interaction.respond(
+  return interaction.respond(
     allOffsets
       .map((minsAdd) => {
         const offsetDate = addMinutes(now, minsAdd)

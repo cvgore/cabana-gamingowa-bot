@@ -1,3 +1,5 @@
+import discordJs from "discord.js";
+
 /**
  * @param {string} msg
  */
@@ -42,3 +44,30 @@ export const fatalError = (msg) => {
 };
 
 export const LOADING_RESPONSE_CHAR = "🔄";
+
+/**
+ * @param {boolean} result
+ * @param {discordJs.Interaction} interaction
+ * @param {string|null} msgFail
+ * @param {string|null} msgOk
+ * @param {boolean|null} hidden
+ */
+export const respondWithResult = async ({
+  interaction,
+  result = true,
+  msgFail = null,
+  msgOk = null,
+  hidden = true,
+}) => {
+  if (result) {
+    return interaction.reply({
+      content: msgOk ?? userSuccess(`operacja wykonana pomyślnie`),
+      ephemeral: hidden,
+    });
+  }
+
+  return interaction.reply({
+    content: msgFail ?? userError(`operacja zakończona niepowodzeniem`),
+    ephemeral: hidden,
+  });
+};

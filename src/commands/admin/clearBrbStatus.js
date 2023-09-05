@@ -2,16 +2,16 @@ import {
   SlashCommandSubcommandBuilder, userMention
 } from "discord.js";
 import discordJs from 'discord.js';
-import { userSuccess } from "../../core/response.js"
+import { respondWithResult, userSuccess } from "../../core/response.js";
 import { removeBrbFromUser } from "../../core/brb.js";
 import { removeBrbStatus } from "../../db/brb.js";
 
 export const definition = new SlashCommandSubcommandBuilder()
-  .setName('clear-brb-status')
-  .setDescription('remove BRB status from user')
+  .setName('wyczysc-status-brb')
+  .setDescription('usuń BRB')
   .addUserOption((opt) => opt
     .setName('user')
-    .setDescription('user to remove from BRB status')
+    .setDescription('z kogo usunąć BRB')
     .setRequired(true)
   )
 
@@ -26,8 +26,8 @@ export const handler = async (interaction) => {
   await removeBrbFromUser(member)
   await removeBrbStatus(interaction.guildId, user.id)
 
-  await interaction.reply({
-    content: userSuccess(`removed BRB status from ${userMention(user.id)}`),
-    ephemeral: true
+  return respondWithResult({
+    interaction,
+    msgOk: userSuccess(`usunięto status z BRB status z ${userMention(user.id)}`)
   })
 }

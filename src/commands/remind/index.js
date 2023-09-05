@@ -1,10 +1,9 @@
-import {
+import discordJs, {
   ActionRowBuilder,
   ButtonBuilder, ButtonStyle, quote,
   SlashCommandBuilder, time
-} from "discord.js";
-import discordJs from 'discord.js';
-import { userCancelled, userInputError, userSuccess } from "../../core/response.js";
+} from 'discord.js';
+import { respondWithResult, userCancelled, userInputError, userSuccess } from "../../core/response.js";
 import { addMinutes, format, getUnixTime, set } from "date-fns";
 import debugCtor from "debug";
 import { createCustomIdShortInvocation, emojifyNumber, parseCustomIdShortInvocation } from "../../core/helpers.js";
@@ -41,10 +40,6 @@ export const definition = new SlashCommandBuilder()
     .setRequired(false)
   );
 
-export const extras = [
-  'buttonInteractionHandler'
-]
-
 /**
  * @param {discordJs.Interaction} interaction
  * @return {Promise<void>}
@@ -54,16 +49,18 @@ export const handler = async (interaction) => {
   const what = interaction.options.getString('what');
 
   if (!Number.isSafeInteger(mins)) {
-    return interaction.reply({
-      content: userInputError('liczba minut musi być liczbą całkowitą'),
-      ephemeral: true,
+    return respondWithResult({
+      interaction,
+      result: false,
+      msgFail: userInputError('liczba minut musi być liczbą całkowitą')
     });
   }
 
   if (mins <= 1) {
-    return interaction.reply({
-      content: userInputError('liczba minut musi być większa od 1'),
-      ephemeral: true,
+    return respondWithResult({
+      interaction,
+      result: false,
+      msgFail: userInputError('liczba minut musi być większa od 1')
     });
   }
 
@@ -131,7 +128,7 @@ export const autocompleteHandler =  async (interaction) => {
     ? [value,...REMIND_TIME_OFFSETS]
     : REMIND_TIME_OFFSETS
 
-  await interaction.respond(
+  return interaction.respond(
     allOffsets
       .map((minsAdd) => {
         const offsetDate = addMinutes(now, minsAdd)

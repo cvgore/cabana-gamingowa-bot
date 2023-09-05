@@ -24,7 +24,6 @@ podman run \
   -e DISCORD_TOKEN="$(cat ~/.config/cbb/discord_token)" \
   -e DISCORD_CLIENT_ID="$(cat ~/.config/cbb/discord_client_id)" \
   -e DISCORD_GUILD_ID="$(cat ~/.config/cbb/discord_guild_id)" \
-  -e DISCORD_BRB_ROLE_ID="$(cat ~/.config/cbb/discord_brb_role_id)" \
   -v ~/cabanagamingowabotdata:/app/storage \
   --name cabana-gamingowa-bot \
   --security-opt=label=disable \

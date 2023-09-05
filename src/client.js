@@ -14,7 +14,7 @@ export const client = new Client({
 });
 
 client.on('ready', () => {
-    logger.info(`Logged in as ${client.user.tag}!`);
+    logger.info(`logged in as ${client.user.tag}`);
 
     debug('registering gateway handlers')
     BOT_COMMANDS.forEach((cmd) => {
@@ -51,38 +51,32 @@ async function handleChatInputCommand(interaction) {
 
     if (command.subcommands.size === 0 || !subcommandName) {
         try {
-            await command.handler(interaction)
+            return command.handler(interaction)
         } catch (ex) {
             logger.error(`error during command invocation ${ex}`)
             debug(ex)
-            await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
-            return
+            return interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
         }
-
-        return
     }
 
     if (! command.subcommands.has(subcommandName)) {
-        await interaction.reply({ content: invalidCommand(), ephemeral: true })
-        return
+        return interaction.reply({ content: invalidCommand(), ephemeral: true })
     }
 
     const subcommand = command.subcommands.get(subcommandName)
 
     try {
-        await subcommand.handler(interaction)
+        return subcommand.handler(interaction)
     } catch (ex) {
         logger.error(`error during command invocation ${ex}`)
         debug(ex)
-        await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
-        return
+        return interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
     }
 }
 
 async function handleAutocomplete(interaction) {
     if (!BOT_COMMANDS.has(interaction.commandName)) {
-        await interaction.reply({ content: invalidCommand(), ephemeral: true })
-        return
+        return interaction.reply({ content: invalidCommand(), ephemeral: true })
     }
 
     const command = BOT_COMMANDS.get(interaction.commandName)
@@ -92,31 +86,26 @@ async function handleAutocomplete(interaction) {
 
     if (command.subcommands.size === 0 || !subcommandName) {
         try {
-            await command.autocompleteHandler(interaction)
+            return command.autocompleteHandler(interaction)
         } catch (ex) {
             logger.error(`error during command invocation ${ex}`)
             debug(ex)
-            await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
-            return
+            return interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
         }
-
-        return
     }
 
     if (! command.subcommands.has(subcommandName)) {
-        await interaction.reply({ content: invalidCommand(), ephemeral: true })
-        return
+        return interaction.reply({ content: invalidCommand(), ephemeral: true })
     }
 
     const subcommand = command.subcommands.get(subcommandName)
 
     try {
-        await subcommand.autocompleteHandler(interaction)
+        return subcommand.autocompleteHandler(interaction)
     } catch (ex) {
         logger.error(`error during command invocation ${ex}`)
         debug(ex)
-        await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
-        return
+        return interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
     }
 }
 
@@ -132,19 +121,17 @@ async function handleButtonInteraction(interaction) {
     const {commandName} = invocation;
 
     if (!BOT_COMMANDS.has(commandName)) {
-        await interaction.reply({ content: invalidCommand(), ephemeral: true })
-        return
+        return interaction.reply({ content: invalidCommand(), ephemeral: true })
     }
 
     const command = BOT_COMMANDS.get(commandName)
 
     try {
-        await command.buttonInteractionHandler(interaction)
+        return command.buttonInteractionHandler(interaction)
     } catch (ex) {
         logger.error(`error during command invocation ${ex}`)
         debug(ex)
-        await interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
-        return
+        return interaction.reply({ content: fatalError('nieznany błąd'), ephemeral: true })
     }
 }
 
@@ -156,21 +143,18 @@ client.on('interactionCreate', async (interaction) => {
     ) return
 
     if (interaction.isButton()) {
-        await handleButtonInteraction(interaction);
-        return
+        return handleButtonInteraction(interaction);
     }
 
     if (interaction.isChatInputCommand()) {
-        await handleChatInputCommand(interaction);
-        return
+        return handleChatInputCommand(interaction);
     }
 
     if (interaction.isAutocomplete()) {
-        await handleAutocomplete(interaction);
-        return
+        return handleAutocomplete(interaction);
     }
 });
 
 export async function init() {
-    await client.login(TOKEN);
+    return client.login(TOKEN);
 }

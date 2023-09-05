@@ -53,8 +53,6 @@ export const BOT_COMMANDS = new Collection(
   })
 );
 
-
-
 export const BOT_COMMANDS_REGISTRABLE = Array.from(BOT_COMMANDS.values()).map(
   (cmd) => {
     debug("serializing cmd %o into json", cmd.definition.name);

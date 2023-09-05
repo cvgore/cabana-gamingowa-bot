@@ -4,7 +4,7 @@ import { unzzzifyNickname, zzzifyNickname } from "./helpers.js";
 
 export const setBrbNicknameToUser = async (user, mins) => {
   try {
-    await user.setNickname(
+    return user.setNickname(
       zzzifyNickname(unzzzifyNickname(user.nickname), mins),
       `brb:set(mins=${mins})`
     );
@@ -31,7 +31,7 @@ export const removeBrbFromUser = async (user) => {
   }
 
   try {
-    await user.setNickname(unzzzifyNickname(user.nickname), "brb:remove");
+    return user.setNickname(unzzzifyNickname(user.nickname), "brb:remove");
   } catch (ex) {
     logger.warn(`failed to unzzzifyNickname from ${user.id}: %j`, ex);
   }

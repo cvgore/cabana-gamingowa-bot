@@ -35,3 +35,96 @@ export const mutedDatabase = dbEnv.openDbi({
   name: "muted",
   create: true,
 });
+
+export const guildSettingsDatabase = dbEnv.openDbi({
+  name: "guildSettings",
+  create: true,
+});
+
+/**
+ *
+ * @param {lmdb.Dbi} dbInstance
+ * @param {string} key
+ * @param {string|null} nil
+ * @returns {string|null}
+ */
+export function getStringFromDb(dbInstance, key, nil = null) {
+  const tx = dbEnv.beginTxn();
+
+  const value = tx.getString(dbInstance, key, {
+    keyIsString: true,
+  });
+
+  tx.commit();
+
+  return value ?? nil;
+}
+
+/**
+ * @param {lmdb.Dbi} dbInstance
+ * @param {string} key
+ * @param {number|null} nil
+ * @returns {number|null}
+ */
+export function getNumberFromDb(dbInstance, key, nil = null) {
+  const tx = dbEnv.beginTxn();
+
+  const value = tx.getNumber(dbInstance, key, {
+    keyIsString: true,
+  });
+
+  tx.commit();
+
+  return value ?? nil;
+}
+
+/**
+ * @param {lmdb.Dbi} dbInstance
+ * @param {string} key
+ * @param {number} value
+ * @returns {void}
+ */
+export function putNumberInDb(dbInstance, key, value) {
+  const tx = dbEnv.beginTxn();
+
+  tx.putNumber(dbInstance, key, value, {
+    keyIsString: true,
+  });
+
+  tx.commit();
+}
+
+/**
+ * @param {lmdb.Dbi} dbInstance
+ * @param {string} key
+ * @param {string} value
+ * @returns {void}
+ */
+export function putStringInDb(dbInstance, key, value) {
+  const tx = dbEnv.beginTxn();
+
+  tx.putString(dbInstance, key, value, {
+    keyIsString: true,
+  });
+
+  tx.commit();
+}
+
+/**
+ * @param {lmdb.Dbi} dbInstance
+ * @param {string} key
+ * @returns {void}
+ */
+export function deleteKeyFromDb(dbInstance, key) {
+  const tx = dbEnv.beginTxn();
+
+  tx.del(dbInstance, key, {
+    keyIsString: true,
+  });
+
+  tx.commit();
+}
+
+export function makeGuildedKey(guildId, entityId) {
+  return `${guildId}::${entityId}`;
+}

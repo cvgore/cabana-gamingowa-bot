@@ -1,8 +1,7 @@
-import {
+import discordJs, {
   SlashCommandBuilder, time, userMention
-} from "discord.js";
-import discordJs from 'discord.js';
-import { userInputError, userSuccess } from "../../core/response.js";
+} from 'discord.js';
+import { respondWithResult, userInputError, userSuccess } from "../../core/response.js";
 import { getLastMutedAt, putLastMutedAt, removeLastMutedAt } from "../../db/muted.js";
 import { getUnixTime } from "date-fns";
 import debugCtor from "debug";
@@ -31,19 +30,21 @@ export const handler = async (interaction) => {
   )
 
   if (lastMutedAt === null) {
-    return interaction.reply({
-      content: userInputError(
+    return respondWithResult({
+      interaction,
+      result: false,
+      msgFail: userInputError(
         `${userMention(user.id)} nie jest wyciszony`
-      ),
-      ephemeral: true,
+      )
     })
   }
 
-  return interaction.reply({
-    content: userSuccess(
+  return respondWithResult({
+    interaction,
+    result: true,
+    msgOk: userSuccess(
       `${userMention(user.id)} jest wyciszony od ${time(lastMutedAt, 'R')} (${time(lastMutedAt)})`
-    ),
-    ephemeral: true
+    )
   })
 }
 /**

@@ -1,14 +1,13 @@
-import {
+import discordJs, {
     SlashCommandSubcommandBuilder,
-} from "discord.js"
-import discordJs from 'discord.js';
+} from 'discord.js';
 import {getBadRankings, putBadRankingById, putBadRankings} from "../../db/bad-rankings.js"
-import {userError, userSuccess} from "../../core/response.js"
+import { respondWithResult, userError, userSuccess } from "../../core/response.js";
 import {randomUUID} from 'crypto'
 
 export const definition = new SlashCommandSubcommandBuilder()
     .setName('nowy')
-    .setDescription('nowiuśki bad ranking')
+    .setDescription('nowiuśki ranking')
     .addStringOption((opt) => opt
         .setName('name')
       .setDescription('nazwa rankingu')
@@ -25,11 +24,11 @@ export const handler = async (interaction) => {
     const rankings = await getBadRankings(interaction.guildId) ?? {}
 
     if (rankings && name in rankings) {
-        await interaction.reply({
-            content: userError(`ranking o nazwie ${name} już istnieje`),
-            ephemeral: true,
-        })
-        return
+        return respondWithResult({
+            interaction,
+            result: false,
+            msgFail: userError(`ranking o nazwie ${name} już istnieje`)
+        });
     }
 
     const uuid = randomUUID();
@@ -46,8 +45,9 @@ export const handler = async (interaction) => {
         updatedBy: interaction.user.id,
     })
 
-    await interaction.reply({
-        content: userSuccess(`ranking "${name}" dodany`),
-        ephemeral: true,
-    })
+    return respondWithResult({
+        interaction,
+        result: true,
+        msgOk: userSuccess(`ranking "${name}" dodany`)
+    });
 }

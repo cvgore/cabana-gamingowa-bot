@@ -110,8 +110,10 @@ export const unzzzifyNickname = (nick) => {
  * @return {string}
  */
 export const createCustomIdShortInvocation = (cmd, action, params) => {
-  return new URL(`${cmd}:${action}?${new URLSearchParams(Object.entries(params))}`).toString();
-}
+  return new URL(
+    `${cmd}:${action}?${new URLSearchParams(Object.entries(params))}`
+  ).toString();
+};
 
 export const parseCustomIdShortInvocation = (customId) => {
   const url = new URL(customId);
@@ -123,6 +125,10 @@ export const parseCustomIdShortInvocation = (customId) => {
   return {
     commandName: url.protocol.slice(0, url.protocol.length - 1),
     action: url.pathname,
-    params: Object.fromEntries(Array.from(url.searchParams.entries()))
-  }
-}
+    params: Object.fromEntries(Array.from(url.searchParams.entries())),
+  };
+};
+
+export const stringifyBooleanValue = (value) => {
+  return value ? "bangla" : "już nie bangla";
+};
