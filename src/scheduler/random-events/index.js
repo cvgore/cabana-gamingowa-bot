@@ -19,6 +19,6 @@ const debug = debugCtor("scheduler:ytExtractor");
 
 export function runRandomEventsForAllEnabledGuilds() {
   for (const randomEvent of RANDOM_EVENTS) {
-    scheduleJobWithContext({ cron: randomEvent.cron }, randomEvent.handle);
+    scheduleJob({ rule: randomEvent.cron }, () => randomEvent.handle());
   }
 }
