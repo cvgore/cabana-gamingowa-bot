@@ -27,7 +27,7 @@ podman run \
   -e RANDOM_THINGS_URL="$(cat ~/.config/cbb/random_things_url)" \
   -e RANDOM_THINGS_APIKEY="$(cat ~/.config/cbb/random_things_apikey)" \
   -v ~/cabanagamingowabotdata:/app/storage \
-  --tz Europe/Warsaw \
+  --tz=local \
   --name cabana-gamingowa-bot \
   --security-opt=label=disable \
   localhost/cabana-gamingowa-bot
