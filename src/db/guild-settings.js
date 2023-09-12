@@ -220,6 +220,5 @@ const putGuildEnabledStatusFeature = (
 
   feature[guildId] = {
     active,
-    extra: { ...feature[guildId].extra, ...extra },
   };
 };
