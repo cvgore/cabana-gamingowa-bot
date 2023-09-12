@@ -35,6 +35,15 @@ client.on('ready', () => {
               (...args) => cmd.presenceUpdateHandler(...args)
             )
         }
+
+        if ('messageCreateHandler' in cmd) {
+            debug('registering messageCreateHandler for %j', cmd.definition.name)
+
+            client.on(
+              'messageCreate',
+              (...args) => cmd.messageCreateHandler(...args)
+            )
+        }
     })
 });
 

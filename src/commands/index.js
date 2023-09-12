@@ -7,6 +7,7 @@ import * as rightback from "./rightback/index.js";
 import * as admin from "./admin/index.js";
 import * as muted from "./muted/index.js";
 import * as remind from "./remind/index.js";
+import * as randomEvent from "./random-event/index.js";
 import { Collection } from "discord.js";
 import debugCtor from "debug";
 
@@ -22,6 +23,7 @@ const commands = [
   admin,
   muted,
   remind,
+  randomEvent,
 ];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {

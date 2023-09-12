@@ -48,11 +48,12 @@ async function brbHandler(guildId, userId, job) {
   }
 }
 
-export function addToScheduleBrb(guildId, userId, endDate) {
+export function runRemindScheduler() {
   const schedule = {
-    end: endDate,
     rule: "* * * * *", // run every minute
   };
 
-  const job = scheduleJob(schedule, () => brbHandler(guildId, userId, job));
+  debug("starting scheduler");
+
+  scheduleJob(schedule, () => remindHandler());
 }

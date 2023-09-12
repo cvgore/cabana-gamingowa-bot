@@ -2,6 +2,7 @@ import lmdb from "node-lmdb";
 import * as path from "path";
 import { fileURLToPath } from "url";
 import { logger } from "../logger.js";
+import { promisify } from "util";
 
 export const directory = path.join(
   fileURLToPath(new URL(".", import.meta.url)),
@@ -41,6 +42,11 @@ export const guildSettingsDatabase = dbEnv.openDbi({
   create: true,
 });
 
+export const ytExtractorDatabase = dbEnv.openDbi({
+  name: "ytExtractor",
+  create: true,
+});
+
 /**
  *
  * @param {lmdb.Dbi} dbInstance
@@ -49,7 +55,7 @@ export const guildSettingsDatabase = dbEnv.openDbi({
  * @returns {string|null}
  */
 export function getStringFromDb(dbInstance, key, nil = null) {
-  const tx = dbEnv.beginTxn();
+  const tx = dbEnv.beginTxn({ readonly: true });
 
   const value = tx.getString(dbInstance, key, {
     keyIsString: true,
@@ -67,7 +73,7 @@ export function getStringFromDb(dbInstance, key, nil = null) {
  * @returns {number|null}
  */
 export function getNumberFromDb(dbInstance, key, nil = null) {
-  const tx = dbEnv.beginTxn();
+  const tx = dbEnv.beginTxn({ readonly: true });
 
   const value = tx.getNumber(dbInstance, key, {
     keyIsString: true,
@@ -127,4 +133,24 @@ export function deleteKeyFromDb(dbInstance, key) {
 
 export function makeGuildedKey(guildId, entityId) {
   return `${guildId}::${entityId}`;
+}
+
+export async function* scanKeys(dbInstance, key) {
+  const txn = dbEnv.beginTxn({ readonly: true });
+  const cursor = new lmdb.Cursor(txn, dbInstance, { keyIsString: true });
+
+  for (
+    let found = cursor.goToRange(key);
+    found !== null;
+    found = cursor.goToNext()
+  ) {
+    if (found !== key) break;
+
+    const [key, value] = await promisify(cursor.getCurrentString)();
+
+    yield { key, value };
+  }
+
+  cursor.close();
+  txn.commit();
 }

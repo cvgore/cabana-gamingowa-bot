@@ -1,4 +1,4 @@
-import {CLIENT_ID, TOKEN, GUILD_ID} from "./env.js";
+import {CLIENT_ID, TOKEN} from "./env.js";
 import {REST, Routes} from "discord.js";
 import {BOT_COMMANDS_REGISTRABLE} from "./commands/index.js";
 import { logger } from "./logger.js";

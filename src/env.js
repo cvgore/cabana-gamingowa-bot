@@ -4,3 +4,7 @@ export const GUILD_ID = process.env.DISCORD_GUILD_ID
 export const COMMIT_HASH = process.env.COMMIT_HASH
 export const BRB_ROLE_ID = process.env.DISCORD_BRB_ROLE_ID
 export const STARTUP_DATE = new Date()
+export const GIPHY_URL = process.env.GIPHY_URL
+export const GIPHY_APIKEY = process.env.GIPHY_APIKEY
+export const RANDOM_THINGS_URL = process.env.RANDOM_THINGS_URL
+export const RANDOM_THINGS_APIKEY = process.env.RANDOM_THINGS_APIKEY
