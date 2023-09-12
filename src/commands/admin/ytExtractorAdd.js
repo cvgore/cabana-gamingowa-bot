@@ -10,6 +10,7 @@ export const definition = new SlashCommandSubcommandBuilder()
   .setDescription("yt-extractor-dodaj")
   .addChannelOption((opt) => opt
     .setName('channel')
+    .setDescription('kanał który śledzić')
     .setRequired(true)
   )
 ;

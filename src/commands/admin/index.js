@@ -12,8 +12,8 @@ export const definition = new SlashCommandBuilder()
 
 export const subcommands = [
   clearBrbStatus,
-  ytExtractorAdd,
-  ytExtractorDel,
-  ytExtractorGet,
-  ytExtractorOff
+  // ytExtractorAdd,
+  // ytExtractorDel,
+  // ytExtractorGet,
+  // ytExtractorOff
 ]

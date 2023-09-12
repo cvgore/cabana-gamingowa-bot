@@ -10,6 +10,7 @@ export const definition = new SlashCommandSubcommandBuilder()
   .setDescription("yt-extractor-usun")
   .addChannelOption((opt) => opt
     .setName('channel')
+    .setDescription('kanał który nie śledzić')
     .setRequired(true)
   )
 ;
