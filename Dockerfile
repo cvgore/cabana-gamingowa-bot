@@ -38,6 +38,8 @@ COPY --chown=node:node . /app
 COPY --from=make-app /app/node_modules /app/node_modules
 COPY --from=make-app /tini /tini
 
+ENV TZ Europe/Warsaw
+
 HEALTHCHECK CMD echo 'import("node-fetch").then(F=>F.default("http://localhost:14587").then(x=>x.text().then(y=>console.log(y))).catch(x=>process.exit(1)))' | node
 
 ENTRYPOINT ["/tini", "--"]
