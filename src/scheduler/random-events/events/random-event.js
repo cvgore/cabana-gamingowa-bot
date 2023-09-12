@@ -34,7 +34,7 @@ export default class RandomEvent {
   /**
    * @return {Generator<string>}
    */
-  get* enabledChannelsIds() {
+  *enabledChannelsIds() {
     for (const guildId of this.enabledGuildIds) {
       yield getRandomEventsGuildChannel(guildId);
     }

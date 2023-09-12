@@ -15,7 +15,7 @@ export default class Easter extends RandomEvent {
 
     const { salute, gifUrl } = await fetchRandomSalute('easter');
 
-    for (const channelId of this.enabledChannelsIds) {
+    for (const channelId of this.enabledChannelsIds()) {
       /** @var {discordJs.TextChannel} channel */
       const channel = await client.channels.fetch(channelId);
       console.assert(channel.type === ChannelType.GuildText);

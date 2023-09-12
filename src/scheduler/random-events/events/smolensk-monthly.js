@@ -8,7 +8,7 @@ export default class SmolenskMonthly extends RandomEvent {
   async handler() {
     const { salute, gifUrl } = await fetchRandomSalute('smolensk-monthly');
 
-    for (const channelId of this.enabledChannelsIds) {
+    for (const channelId of this.enabledChannelsIds()) {
       /** @var {discordJs.TextChannel} channel */
       const channel = await client.channels.fetch(channelId);
       console.assert(channel.type === ChannelType.GuildText);

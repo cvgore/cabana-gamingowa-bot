@@ -8,7 +8,7 @@ export default class JpiiPope extends RandomEvent {
   async handler() {
     const { salute, gifUrl } = await fetchRandomSalute('jp2');
 
-    for (const channelId of this.enabledChannelsIds) {
+    for (const channelId of this.enabledChannelsIds()) {
       /** @var {discordJs.TextChannel} channel */
       const channel = await client.channels.fetch(channelId);
       console.assert(channel.type === ChannelType.GuildText);
