@@ -25,6 +25,6 @@ export default class Test extends RandomEvent {
   }
 
   get cron() {
-    return '00,10,20,30,40,50 22 * * *';
+    return '00,10,20,30,40,50 22,23 * * *';
   }
 }

@@ -30,6 +30,7 @@ export const fetchRandomSalute = async (category) => {
 
     return body;
   } catch (ex) {
+    debug('failed to fetch random thing', ex);
     logger.error("failed to fetch random thing", { url, ex });
   }
 };
@@ -59,6 +60,7 @@ export const fetchNextEaster = async () => {
       nextEasterAt: new Date(body.nextEasterAt),
     };
   } catch (ex) {
+    debug('failed to fetch next easter', ex);
     logger.error("failed to fetch random thing", { url, ex });
   }
 };
