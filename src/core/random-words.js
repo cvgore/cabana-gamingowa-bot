@@ -11,7 +11,7 @@ const debug = debugCtor('random-words');
  */
 export const fetchRandomSalute = async (category) => {
   const url = new URL(RANDOM_THINGS_URL);
-  url.pathname = `/v1/random/salute`;
+  url.pathname = '/v1/random/salute';
   url.searchParams.set("category", category);
 
   debug('request random salute %o', url);
@@ -20,7 +20,7 @@ export const fetchRandomSalute = async (category) => {
     const response = await fetch({
       url: url.toString(),
       headers: {
-        Authorization: `Bearer ${RANDOM_THINGS_APIKEY}`,
+        'Authorization': `Bearer ${RANDOM_THINGS_APIKEY}`,
       },
     });
 
@@ -40,7 +40,7 @@ export const fetchRandomSalute = async (category) => {
  */
 export const fetchNextEaster = async () => {
   const url = new URL(RANDOM_THINGS_URL);
-  url.pathname = `/v1/easter`;
+  url.pathname = '/v1/easter';
 
   debug('request next easter %o', url);
 

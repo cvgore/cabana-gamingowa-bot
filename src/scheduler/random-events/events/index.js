@@ -7,11 +7,11 @@ import Easter from "./easter.js";
 import Test from "./test.js";
 
 export const RANDOM_EVENTS = [
-  new Test(),
-  new JpiiPope(),
-  new Nnn(),
-  new SmolenskMonthly(),
-  new Wtc(),
-  new Xmas(),
-  new Easter(),
+  // new Test(),
+  // new JpiiPope(),
+  // new Nnn(),
+  // new SmolenskMonthly(),
+  // new Wtc(),
+  // new Xmas(),
+  // new Easter(),
 ]
