@@ -19,7 +19,7 @@ export default class Test extends RandomEvent {
       console.assert(channel.type === ChannelType.GuildText);
 
       await channel.send({
-        body: `${salute}\n\n${gifUrl}`
+        content: `${salute}\n\n${gifUrl}`,
       });
     }
   }
