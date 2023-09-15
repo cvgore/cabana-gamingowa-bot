@@ -164,13 +164,13 @@ const getGuildEnabledStatusFeatures = () => {
 export const getFeatureEnabledGuilds = (featureName) => {
   const features = getGuildEnabledStatusFeatures();
 
-  return Object.keys(features[featureName]);
+  return Object.keys(features[featureName] ?? {});
 };
 
 export const getFeatureEnabledGuildsWithChannels = (featureName) => {
   const features = getGuildEnabledStatusFeatures();
 
-  return Object.keys(features[featureName]);
+  return Object.keys(features[featureName] ?? {});
 };
 
 /**
