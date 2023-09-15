@@ -221,4 +221,10 @@ const putGuildEnabledStatusFeature = (
   feature[guildId] = {
     active,
   };
+
+  putStringInDb(
+    guildSettingsDatabase,
+    "guild-enabled-features",
+    JSON.stringify(features)
+  );
 };
