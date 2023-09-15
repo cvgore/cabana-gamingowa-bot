@@ -30,8 +30,7 @@ export const fetchRandomSalute = async (category) => {
 
     return body;
   } catch (ex) {
-    debug('failed to fetch random salute', ex);
-    logger.error("failed to fetch random salute", { url, ex });
+    logger.error("failed to fetch random salute %o %o", url, ex);
   }
 };
 
@@ -60,8 +59,7 @@ export const fetchNextEaster = async () => {
       nextEasterAt: new Date(body.nextEasterAt),
     };
   } catch (ex) {
-    debug('failed to fetch next easter %o', ex);
-    logger.error("failed to fetch random thing", { url, ex });
+    logger.error("failed to fetch next easter %o %o", url, ex);
   }
 };
 
@@ -88,7 +86,6 @@ export const fetchMorningSalute = async () => {
 
     return body;
   } catch (ex) {
-    debug('failed to fetch morning salute %o', ex);
-    logger.error("failed to fetch morning salute", { url, ex });
+    logger.error("failed to fetch morning salute %o %o", url, ex);
   }
 };
