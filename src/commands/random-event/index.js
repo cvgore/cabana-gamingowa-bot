@@ -46,7 +46,7 @@ export const handler = async (interaction) => {
   putRandomEventsEnabled(interaction.guildId, active);
   putRandomEventsGuildChannel(
     interaction.guildId,
-    active ? channel.id : null
+    active ? channel.id : ''
   );
 
   return respondWithResult({
