@@ -1,5 +1,5 @@
-import { guildSettingsDatabase, scanKeys } from "../../../db/index.js";
 import { getFeatureEnabledGuilds, getRandomEventsGuildChannel } from "../../../db/guild-settings.js";
+import { logger } from "../../../logger.js";
 
 export default class RandomEvent {
 
@@ -38,5 +38,17 @@ export default class RandomEvent {
     for (const guildId of this.enabledGuildIds) {
       yield getRandomEventsGuildChannel(guildId);
     }
+  }
+
+  async run(){
+    let anyActive = this.enabledGuildIds.length !== 0;
+
+    if (anyActive) {
+      return this.handler();
+    }
+
+    logger.info('skipped running %s due to no enabled guilds', this.name);
+
+    return Promise.resolve();
   }
 }

@@ -7,11 +7,11 @@ const debug = debugCtor('random-words');
 
 /**
  * @param {"jp2"|"wtc"|"easter"|"xmas"|"smolensk-monthly"|"nnn"|"test"} category
- * @return {Promise<{salute: string, id: string, gifUrl: string}>}
+ * @return {Promise<{salute: string, gifUrl: string}>}
  */
 export const fetchRandomSalute = async (category) => {
   const url = new URL(RANDOM_THINGS_URL);
-  url.pathname = '/v1/random/salute';
+  url.pathname = '/v1/salute/random';
   url.searchParams.set("category", category);
 
   debug('request random salute %o', url);
@@ -30,8 +30,8 @@ export const fetchRandomSalute = async (category) => {
 
     return body;
   } catch (ex) {
-    debug('failed to fetch random thing', ex);
-    logger.error("failed to fetch random thing", { url, ex });
+    debug('failed to fetch random salute', ex);
+    logger.error("failed to fetch random salute", { url, ex });
   }
 };
 
@@ -60,7 +60,35 @@ export const fetchNextEaster = async () => {
       nextEasterAt: new Date(body.nextEasterAt),
     };
   } catch (ex) {
-    debug('failed to fetch next easter', ex);
+    debug('failed to fetch next easter %o', ex);
     logger.error("failed to fetch random thing", { url, ex });
+  }
+};
+
+/**
+ * @return {Promise<{salute: string, gifUrl: string}>}
+ */
+export const fetchMorningSalute = async () => {
+  const url = new URL(RANDOM_THINGS_URL);
+  url.pathname = '/v1/salute/morning';
+
+  debug('request morning salute %o', url);
+
+  try {
+    const response = await fetch({
+      url: url.toString(),
+      headers: {
+        'Authorization': `Bearer ${RANDOM_THINGS_APIKEY}`,
+      },
+    });
+
+    const body = await response.json();
+
+    debug('respond from morning salute %o %o', url, body);
+
+    return body;
+  } catch (ex) {
+    debug('failed to fetch morning salute %o', ex);
+    logger.error("failed to fetch morning salute", { url, ex });
   }
 };
