@@ -1,25 +1,12 @@
-import RandomEvent from "./random-event.js";
-import { client } from "../../../client.js";
-import discordJs, { ChannelType } from "discord.js";
-import { fetchRandomSalute } from "../../../core/random-words.js";
+import SaluteEvent from "./salute-event.js";
 
-export default class Nnn extends RandomEvent {
+export default class Nnn extends SaluteEvent {
 
-  async handler() {
-    const { salute, gifUrl } = await fetchRandomSalute('nnn');
-
-    for (const channelId of this.enabledChannelsIds()) {
-      /** @var {discordJs.TextChannel} channel */
-      const channel = await client.channels.fetch(channelId);
-      console.assert(channel.type === ChannelType.GuildText);
-
-      await channel.send({
-        content: `${salute}\n\n${gifUrl}`,
-      });
-    }
+  get saluteCategory() {
+    return 'nnn';
   }
 
   get cron() {
-    return '00 09 01 11 *';
+    return '30 09 01 11 *';
   }
 }

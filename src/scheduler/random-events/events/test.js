@@ -1,27 +1,9 @@
-import RandomEvent from "./random-event.js";
-import { client } from "../../../client.js";
-import discordJs, { ChannelType } from "discord.js";
-import { fetchRandomSalute } from "../../../core/random-words.js";
-import debugCtor from "debug";
+import SaluteEvent from "./salute-event.js";
 
-const debug = debugCtor('random-event:test');
+export default class Test extends SaluteEvent {
 
-export default class Test extends RandomEvent {
-
-  async handler() {
-    const { salute, gifUrl } = await fetchRandomSalute('test');
-
-    for (const channelId of this.enabledChannelsIds()) {
-      debug('running for channel %o', channelId);
-
-      /** @var {discordJs.TextChannel} channel */
-      const channel = await client.channels.fetch(channelId);
-      console.assert(channel.type === ChannelType.GuildText);
-
-      await channel.send({
-        content: `${salute}\n\n${gifUrl}`,
-      });
-    }
+  get saluteCategory() {
+    return 'smolensk-monthly';
   }
 
   get cron() {
