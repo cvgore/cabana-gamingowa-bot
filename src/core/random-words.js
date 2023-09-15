@@ -17,11 +17,10 @@ export const fetchRandomSalute = async (category) => {
   debug('request random salute %o', url);
 
   try {
-    const response = await fetch({
-      url: url.toString(),
+    const response = await fetch(url.toString(), {
       headers: {
         'Authorization': `Bearer ${RANDOM_THINGS_APIKEY}`,
-      },
+      }
     });
 
     const body = await response.json();
@@ -44,11 +43,10 @@ export const fetchNextEaster = async () => {
   debug('request next easter %o', url);
 
   try {
-    const response = await fetch({
-      url: url.toString(),
+    const response = await fetch(url.toString(), {
       headers: {
-        Authorization: `Bearer ${RANDOM_THINGS_APIKEY}`,
-      },
+        'Authorization': `Bearer ${RANDOM_THINGS_APIKEY}`,
+      }
     });
 
     const body = await response.json();
@@ -73,11 +71,10 @@ export const fetchMorningSalute = async () => {
   debug('request morning salute %o', url);
 
   try {
-    const response = await fetch({
-      url: url.toString(),
+    const response = await fetch(url.toString(), {
       headers: {
         'Authorization': `Bearer ${RANDOM_THINGS_APIKEY}`,
-      },
+      }
     });
 
     const body = await response.json();
