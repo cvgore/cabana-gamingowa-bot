@@ -228,3 +228,28 @@ const putGuildEnabledStatusFeature = (
     JSON.stringify(features)
   );
 };
+
+/**
+ * @return {boolean}
+ */
+export const getRandomEventsDebugModeEnabled = () => {
+  return (
+    getNumberFromDb(
+      guildSettingsDatabase,
+      "random-events:debug-mode-enabled",
+      0
+    ) === 1
+  );
+};
+
+/**
+ * @param {boolean} value
+ * @return {void}
+ */
+export const putRandomEventsDebugModeEnabled = (value) => {
+  putNumberInDb(
+    guildSettingsDatabase,
+    "random-events:debug-mode-enabled",
+    value ? 1 : 0
+  );
+};
