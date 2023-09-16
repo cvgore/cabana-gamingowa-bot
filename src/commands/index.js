@@ -8,7 +8,7 @@ import * as admin from "./admin/index.js";
 import * as muted from "./muted/index.js";
 import * as remind from "./remind/index.js";
 import * as randomEvent from "./random-event/index.js";
-import * as owner from "./random-event/index.js";
+import * as owner from "./owner/index.js";
 import { Collection } from "discord.js";
 import debugCtor from "debug";
 
