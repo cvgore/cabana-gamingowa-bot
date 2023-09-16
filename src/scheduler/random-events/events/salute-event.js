@@ -30,7 +30,7 @@ export default class SaluteEvent extends RandomEvent {
       console.assert(channel.type === ChannelType.GuildText);
 
       await channel.send({
-        content: `${salute}\n${gifUrl}`,
+        content: gifUrl ? `${salute}\n${gifUrl}` : salute,
       });
     }
   }

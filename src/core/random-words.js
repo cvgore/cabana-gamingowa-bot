@@ -62,7 +62,7 @@ export const fetchNextEaster = async () => {
 };
 
 /**
- * @return {Promise<{salute: string, gifUrl: string}>}
+ * @return {Promise<{salute: string, gifUrl: string | null}>}
  */
 export const fetchMorningSalute = async () => {
   const url = new URL(RANDOM_THINGS_URL);
