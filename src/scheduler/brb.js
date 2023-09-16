@@ -48,7 +48,6 @@ async function brbHandler(guildId, userId, job) {
   }
 }
 
-
 export function addToScheduleBrb(guildId, userId, endDate) {
   const schedule = {
     end: endDate,

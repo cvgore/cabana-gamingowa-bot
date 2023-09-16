@@ -8,6 +8,7 @@ import * as admin from "./admin/index.js";
 import * as muted from "./muted/index.js";
 import * as remind from "./remind/index.js";
 import * as randomEvent from "./random-event/index.js";
+import * as owner from "./random-event/index.js";
 import { Collection } from "discord.js";
 import debugCtor from "debug";
 
@@ -24,6 +25,7 @@ const commands = [
   muted,
   remind,
   randomEvent,
+  owner,
 ];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {
