@@ -2,7 +2,7 @@ import {SlashCommandBuilder} from "discord.js"
 import * as randomEventsDebugMode from "./randomEventsDebugMode.js"
 
 export const definition = new SlashCommandBuilder()
-  .setName('komendy-wlasciciela')
+  .setName('owner')
   .setDescription('komendy właściciela bota xd')
 
 export const subcommands = [

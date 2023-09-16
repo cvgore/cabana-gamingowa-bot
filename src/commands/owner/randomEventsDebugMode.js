@@ -7,8 +7,8 @@ import { putRandomEventsDebugModeEnabled } from "../../db/guild-settings.js";
 import { isUserOwner } from "../../core/user.js";
 
 export const definition = new SlashCommandSubcommandBuilder()
-  .setName('tryb-debugowania-losowych-eventow')
-  .setDescription('tryb-debugowania-losowych-eventow')
+  .setName('debug-random-events')
+  .setDescription('debug-random-events')
   .addBooleanOption((opt) => opt
     .setName('enabled')
     .setDescription('enabled')
