@@ -43,6 +43,10 @@ export const fatalError = (msg) => {
   return `️👾 ała kurwa rzeczywiście! ${msg}`;
 };
 
+export const notAnOwner = () => {
+  return `💢 za bramę już, masz za mało punktów siły aby używać tego spela!`;
+};
+
 export const LOADING_RESPONSE_CHAR = "🔄";
 
 /**
