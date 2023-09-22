@@ -200,6 +200,33 @@ export const putRandomEventsGuildChannel = (guildId, channelId) => {
 
 /**
  * @param {string} guildId
+ * @return {string[]}
+ */
+export const getRandomEventsBlacklist = (guildId) => {
+  const value = getStringFromDb(
+    guildSettingsDatabase,
+    makeGuildedKey(guildId, "random-events:blacklist"),
+    '[]'
+  );
+
+  return JSON.parse(value);
+};
+
+/**
+ * @param {string} guildId
+ * @param {string[]} blacklist
+ * @return {void}
+ */
+export const putRandomEventsBlacklist = (guildId, blacklist) => {
+  putStringInDb(
+    guildSettingsDatabase,
+    makeGuildedKey(guildId, "random-events:blacklist"),
+    JSON.stringify(blacklist)
+  );
+};
+
+/**
+ * @param {string} guildId
  * @param {string} featureName
  * @param {boolean} active
  * @param {Object} extra

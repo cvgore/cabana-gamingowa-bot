@@ -1,4 +1,8 @@
-import { getFeatureEnabledGuilds, getRandomEventsGuildChannel } from "../../../db/guild-settings.js";
+import {
+  getFeatureEnabledGuilds,
+  getRandomEventsBlacklist,
+  getRandomEventsGuildChannel
+} from "../../../db/guild-settings.js";
 import { logger } from "../../../logger.js";
 
 export default class RandomEvent {
@@ -28,7 +32,13 @@ export default class RandomEvent {
    * @return {string[]}
    */
   get enabledGuildIds() {
-    return getFeatureEnabledGuilds("random-events");
+    const guilds = getFeatureEnabledGuilds("random-events");
+
+    return guilds.filter((guild) => {
+      const blacklist = getRandomEventsBlacklist(guild);
+
+      return !blacklist.includes(this.name);
+    });
   }
 
   /**

@@ -1,7 +1,6 @@
 import SaluteEvent from "./salute-event.js";
 
 export default class JpiiPope extends SaluteEvent {
-
   get saluteCategory() {
     return 'jp2';
   }
