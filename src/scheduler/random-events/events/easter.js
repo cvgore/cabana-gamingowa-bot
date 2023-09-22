@@ -15,7 +15,7 @@ export default class Easter extends SaluteEvent {
     if (!await super.shouldRun()) {
       return false;
     }
-x
+
     const { nextEasterAt } = await fetchNextEaster();
 
     if (!isSameDay(new Date(), nextEasterAt)) {
