@@ -35,7 +35,7 @@ export const handler = async (interaction) => {
     ephemeral: true
   });
 
-  const randomEvent = RANDOM_EVENTS.find((x) => x.name);
+  const randomEvent = RANDOM_EVENTS.find((x) => x.name === eventName);
 
   try {
     if (typeof randomEvent !== 'undefined') {
