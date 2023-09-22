@@ -1,12 +1,12 @@
 import discordJs, {
   ChannelType,
-  SlashCommandBuilder
+  SlashCommandSubcommandBuilder
 } from "discord.js";
 import { respondWithResult, userInputError } from "../../core/response.js";
 import debugCtor from "debug";
 import { putRandomEventsEnabled, putRandomEventsGuildChannel } from "../../db/guild-settings.js";
 
-export const definition = new SlashCommandBuilder()
+export const definition = new SlashCommandSubcommandBuilder()
   .setName("zarzadzaj")
   .setDescription("chcesz czy nie?")
   .addBooleanOption((opt) => opt
