@@ -55,6 +55,7 @@ export const LOADING_RESPONSE_CHAR = "🔄";
  * @param {string|null} msgFail
  * @param {string|null} msgOk
  * @param {boolean|null} hidden
+ * @param {boolean|null} followup
  */
 export const respondWithResult = async ({
   interaction,
@@ -62,16 +63,20 @@ export const respondWithResult = async ({
   msgFail = null,
   msgOk = null,
   hidden = true,
+  followup = false,
 }) => {
-  if (result) {
-    return interaction.reply({
-      content: msgOk ?? userSuccess(`operacja wykonana pomyślnie`),
-      ephemeral: hidden,
+  const content = result
+    ? msgOk ?? userSuccess(`operacja wykonana pomyślnie`)
+    : msgFail ?? userError(`operacja zakończona niepowodzeniem`);
+
+  if (followup) {
+    return interaction.editReply({
+      content,
     });
   }
 
   return interaction.reply({
-    content: msgFail ?? userError(`operacja zakończona niepowodzeniem`),
+    content,
     ephemeral: hidden,
   });
 };

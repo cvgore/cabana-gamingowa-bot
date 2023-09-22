@@ -11,16 +11,20 @@ export default class Easter extends SaluteEvent {
     return 'easter';
   }
 
-  async handler() {
+  async shouldRun() {
+    if (!await super.shouldRun()) {
+      return false;
+    }
+x
     const { nextEasterAt } = await fetchNextEaster();
 
     if (!isSameDay(new Date(), nextEasterAt)) {
       debug('skipping running easter event - expected %o vs now %o', nextEasterAt, new Date());
 
-      return Promise.resolve();
+      return false;
     }
 
-    return super.handler();
+    return true;
   }
 
   get cron() {

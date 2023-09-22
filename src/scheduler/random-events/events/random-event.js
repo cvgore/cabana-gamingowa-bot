@@ -11,7 +11,7 @@ export default class RandomEvent {
   }
 
   /**
-   * @return {string}
+   * @return {string|null}
    */
   get cron() {
     throw new Error(`${this.name} does not implement required cron method`);
@@ -40,14 +40,22 @@ export default class RandomEvent {
     }
   }
 
-  async run(){
-    let anyActive = this.enabledGuildIds.length !== 0;
+  async shouldRun() {
+    const anyActive = this.enabledGuildIds.length !== 0;
 
-    if (anyActive) {
-      return this.handler();
+    if (!anyActive) {
+      logger.info('skipped running %s due to no enabled guilds', this.name);
+
+      return false;
     }
 
-    logger.info('skipped running %s due to no enabled guilds', this.name);
+    return true;
+  }
+
+  async run(force = false){
+    if (force || await this.shouldRun()) {
+      return this.handler();
+    }
 
     return Promise.resolve();
   }

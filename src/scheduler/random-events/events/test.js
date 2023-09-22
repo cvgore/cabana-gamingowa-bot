@@ -2,10 +2,12 @@ import SaluteEvent from "./salute-event.js";
 import { getRandomEventsDebugModeEnabled } from "../../../db/guild-settings.js";
 
 export default class Test extends SaluteEvent {
-  async handler() {
-    if (getRandomEventsDebugModeEnabled()) {
-      return super.handler();
+  async shouldRun() {
+    if (!await super.shouldRun()) {
+      return false;
     }
+
+    return getRandomEventsDebugModeEnabled();
   }
 
   get saluteCategory() {
@@ -13,6 +15,6 @@ export default class Test extends SaluteEvent {
   }
 
   get cron() {
-    return '* * * * *';
+    return null;
   }
 }
