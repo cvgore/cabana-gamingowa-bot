@@ -55,13 +55,6 @@ export const handler = async (interaction) => {
       return interaction.editReply({
         files: [
           image
-        ],
-        embeds: [
-          {
-            image: {
-              url: "attachment://fancy.gif"
-            }
-          }
         ]
       });
     }
