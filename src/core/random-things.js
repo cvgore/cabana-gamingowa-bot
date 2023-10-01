@@ -3,8 +3,7 @@ import { RANDOM_THINGS_APIKEY, RANDOM_THINGS_URL } from "../env.js";
 import { logger } from "../logger.js";
 import debugCtor from "debug";
 import rustic from "rustic";
-
-const { Err, Ok, ResultEquipped: Result } = rustic;
+const { Err, Ok, ResultEquipped, equip } = rustic;
 
 const debug = debugCtor("random-words");
 
@@ -93,7 +92,7 @@ export const fetchMorningSalute = async () => {
 /**
  * @param {'fire'} family
  * @param {string} text
- * @return {Promise<Result<string, string>>}
+ * @return {Promise<ResultEquipped<string, string>>}
  */
 export const getFancyFontGif = async (family, text) => {
   const url = new URL(RANDOM_THINGS_URL);
@@ -115,12 +114,12 @@ export const getFancyFontGif = async (family, text) => {
       response
     );
 
-    return new Result(Err(await response.text()));
+    return equip(Err(await response.text()));
   }
 
   const image = Buffer.from(await response.arrayBuffer()).toString("base64");
 
-  debug("respond from text fancy %o %o", url, image);
+  debug("respond from text fancy %o - ok", url);
 
-  return new Result(Ok(image));
+  return equip(Ok(image));
 };

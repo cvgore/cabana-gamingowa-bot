@@ -12,7 +12,8 @@
     "start": "node src/index.js --experimental-json-modules",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/**/*.js",
-    "format": "prettier -w src/**/*.js"
+    "format": "prettier -w src/**/*.js",
+    "postinstall": "patch-package"
   },
   "keywords": [],
   "author": "cvgore",
@@ -27,6 +28,7 @@
     "node-fetch": "^3.3.0",
     "node-lmdb": "^0.9.7",
     "node-schedule": "^2.1.1",
+    "patch-package": "^8.0.0",
     "pino": "^8.8.0",
     "pino-debug": "^2.0.0",
     "rustic": "^1.2.2",
