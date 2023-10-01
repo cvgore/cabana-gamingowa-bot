@@ -24,9 +24,7 @@ export const definition = new SlashCommandSubcommandBuilder()
 export const handler = async (interaction) => {
   const text = interaction.options.getString("text", true);
 
-  await interaction.deferReply({
-    ephemeral: true,
-  });
+  await interaction.deferReply();
 
   return (await getFancyFontGif("fire", text)).mapOrElse(
     (err) => {
@@ -60,7 +58,6 @@ export const handler = async (interaction) => {
         ],
         embeds: [
           {
-            title: text,
             image: {
               url: "attachment://fancy.gif"
             }
