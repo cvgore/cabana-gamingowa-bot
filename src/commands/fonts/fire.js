@@ -34,7 +34,8 @@ export const handler = async (interaction) => {
         return respondWithResult({
           interaction,
           msgFail: userInputError(`tekst jest za długi (${text.length} znaków)`),
-          result: false
+          result: false,
+          followup: true,
         });
       }
 
@@ -42,13 +43,14 @@ export const handler = async (interaction) => {
         return respondWithResult({
           interaction,
           msgFail: userInputError(`tekst zawiera niedozwolone znaki`),
-          result: false
+          result: false,
+          followup: true,
         });
       }
     },
     (gifBase64) => {
       debug('got valid gif, yay');
-      return interaction.reply({
+      return interaction.editReply({
         files: [
           { data: gifBase64, name: "fancy.gif", contentType: "image/gif", key: "fancy" }
         ],
