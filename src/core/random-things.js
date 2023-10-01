@@ -2,7 +2,9 @@ import fetch from "node-fetch";
 import { RANDOM_THINGS_APIKEY, RANDOM_THINGS_URL } from "../env.js";
 import { logger } from "../logger.js";
 import debugCtor from "debug";
-import { Err, Ok, ResultEquipped as Result } from "rustic";
+import rustic from "rustic";
+
+const { Err, Ok, ResultEquipped: Result } = rustic;
 
 const debug = debugCtor("random-words");
 
