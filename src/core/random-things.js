@@ -92,11 +92,13 @@ export const fetchMorningSalute = async () => {
 
 /**
  * @param {'fire'} family
+ * @param {string} text
  * @return {Promise<Result<string, string>>}
  */
-export const getFancyFontGif = async (family) => {
+export const getFancyFontGif = async (family, text) => {
   const url = new URL(RANDOM_THINGS_URL);
   url.pathname = `/v1/text/fancy/${family}`;
+  url.searchParams.set('text', text);
 
   debug("request text fancy %o", url);
 
