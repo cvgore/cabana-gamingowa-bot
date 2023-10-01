@@ -92,7 +92,7 @@ export const fetchMorningSalute = async () => {
 /**
  * @param {'fire'} family
  * @param {string} text
- * @return {Promise<ResultEquipped<string, string>>}
+ * @return {Promise<ResultEquipped<Buffer, string>>}
  */
 export const getFancyFontGif = async (family, text) => {
   const url = new URL(RANDOM_THINGS_URL);
@@ -117,7 +117,7 @@ export const getFancyFontGif = async (family, text) => {
     return equip(Err(await response.text()));
   }
 
-  const image = Buffer.from(await response.arrayBuffer()).toString("base64");
+  const image = Buffer.from(await response.arrayBuffer());
 
   debug("respond from text fancy %o - ok", url);
 

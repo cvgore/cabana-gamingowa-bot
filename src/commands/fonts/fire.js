@@ -1,4 +1,5 @@
 import discordJs, {
+  AttachmentBuilder,
   SlashCommandSubcommandBuilder
 } from "discord.js";
 import { respondWithResult, userInputError } from "../../core/response.js";
@@ -48,11 +49,14 @@ export const handler = async (interaction) => {
         });
       }
     },
-    (gifBase64) => {
+    (gifBuffer) => {
+      const image = new AttachmentBuilder(gifBuffer, {
+        name: "fancy.gif",
+      })
       debug('got valid gif, yay');
       return interaction.editReply({
         files: [
-          { data: gifBase64, name: "fancy.gif", contentType: "image/gif", key: "fancy" }
+          image
         ],
         embeds: [
           {
