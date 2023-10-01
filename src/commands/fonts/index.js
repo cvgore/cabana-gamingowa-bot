@@ -2,7 +2,7 @@ import {
   SlashCommandBuilder
 } from "discord.js";
 
-import * as fire from "fire.js";
+import * as fire from "./fire.js";
 
 export const definition = new SlashCommandBuilder()
   .setName("fonty")
