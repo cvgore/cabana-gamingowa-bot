@@ -114,7 +114,9 @@ export const getFancyFontGif = async (family, text) => {
       response
     );
 
-    return equip(Err(await response.text()));
+    const body = await response.json();
+
+    return equip(Err(body.message));
   }
 
   const image = Buffer.from(await response.arrayBuffer());
