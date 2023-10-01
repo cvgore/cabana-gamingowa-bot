@@ -29,6 +29,7 @@
     "node-schedule": "^2.1.1",
     "pino": "^8.8.0",
     "pino-debug": "^2.0.0",
+    "rustic": "^1.2.2",
     "utf-8-validate": "^6.0.2",
     "zlib-sync": "^0.1.7"
   },

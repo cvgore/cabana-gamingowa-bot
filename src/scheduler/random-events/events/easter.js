@@ -1,4 +1,4 @@
-import { fetchNextEaster } from "../../../core/random-words.js";
+import { fetchNextEaster } from "../../../core/random-things.js";
 import { isSameDay } from "date-fns";
 import SaluteEvent from "./salute-event.js";
 import debugCtor from "debug";

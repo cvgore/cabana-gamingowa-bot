@@ -206,7 +206,7 @@ export const getRandomEventsBlacklist = (guildId) => {
   const value = getStringFromDb(
     guildSettingsDatabase,
     makeGuildedKey(guildId, "random-events:blacklist"),
-    '[]'
+    "[]"
   );
 
   return JSON.parse(value);

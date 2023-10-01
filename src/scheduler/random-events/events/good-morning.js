@@ -1,4 +1,4 @@
-import { fetchMorningSalute } from "../../../core/random-words.js";
+import { fetchMorningSalute } from "../../../core/random-things.js";
 import SaluteEvent from "./salute-event.js";
 
 export default class GoodMorning extends SaluteEvent {

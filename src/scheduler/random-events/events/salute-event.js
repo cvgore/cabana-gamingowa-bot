@@ -2,7 +2,7 @@ import RandomEvent from "./random-event.js";
 import { client } from "../../../client.js";
 import discordJs, { ChannelType } from "discord.js";
 import debugCtor from "debug";
-import { fetchRandomSalute } from "../../../core/random-words.js";
+import { fetchRandomSalute } from "../../../core/random-things.js";
 
 const debug = debugCtor('random-event:salute-event');
 
