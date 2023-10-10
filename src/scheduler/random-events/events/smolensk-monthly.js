@@ -1,6 +1,6 @@
-import RandomEvent from "./random-event.js";
+import SaluteEvent from "./salute-event.js";
 
-export default class SmolenskMonthly extends RandomEvent {
+export default class SmolenskMonthly extends SaluteEvent {
 
   get saluteCategory() {
     return 'smolensk-monthly';
