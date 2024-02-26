@@ -125,3 +125,53 @@ export const getFancyFontGif = async (family, text) => {
 
   return equip(Ok(image));
 };
+
+/**
+ * @param {string} patientName
+ * @param {string} itemName
+ * @param {string|null} issuerName
+ * @param {string|null} doseText
+ * @param {string|null} code
+ * @return {Promise<ResultEquipped<Buffer, string>>}
+ */
+export const getEPrescriptionImage = async (patientName, itemName, issuerName = null, doseText = null, code = null) => {
+  const url = new URL(RANDOM_THINGS_URL);
+  url.pathname = `/v1/eprescription`;
+  url.searchParams.set("patientName", patientName);
+  url.searchParams.set("itemName", itemName);
+  if (issuerName) {
+    url.searchParams.set("issuerName", issuerName);
+  }
+  if (doseText) {
+    url.searchParams.set("doseText", doseText);
+  }
+  if (code) {
+    url.searchParams.set("code", code);
+  }
+
+  debug("request eprescription %o", url);
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      Authorization: `Bearer ${RANDOM_THINGS_APIKEY}`,
+    },
+  });
+
+  if (response.status !== 200) {
+    logger.warn(
+      "invalid response from random things %o %o",
+      response.status,
+      response
+    );
+
+    const body = await response.json();
+
+    return equip(Err(body.message));
+  }
+
+  const image = Buffer.from(await response.arrayBuffer());
+
+  debug("respond from eprescription %o - ok", url);
+
+  return equip(Ok(image));
+};
