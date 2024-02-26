@@ -12,22 +12,22 @@ export const definition = new SlashCommandSubcommandBuilder()
   .setName("make")
   .setDescription("wypisz recepte")
   .addStringOption((opt) => opt
-    .setName("patientName")
+    .setName("patient_name")
     .setDescription("pacjent")
     .setRequired(true)
   )
   .addStringOption((opt) => opt
-    .setName("itemName")
+    .setName("item_name")
     .setDescription("na co wypisac recepte")
     .setRequired(true)
   )
   .addStringOption((opt) => opt
-    .setName("issuerName")
+    .setName("issuer_name")
     .setDescription("kto wystawia")
     .setRequired(false)
   )
   .addStringOption((opt) => opt
-    .setName("doseText")
+    .setName("dose_text")
     .setDescription("jaka dawka wariacie, tylko żeby cie z butów nie wyjebało")
     .setRequired(false)
   )
@@ -43,10 +43,10 @@ export const definition = new SlashCommandSubcommandBuilder()
  * @return {Promise<unknown>}
  */
 export const handler = async (interaction) => {
-  const patientName = interaction.options.getString("patientName", true);
-  const itemName = interaction.options.getString("itemName", true);
-  const issuerName = interaction.options.getString("issuerName");
-  const doseText = interaction.options.getString("doseText");
+  const patientName = interaction.options.getString("patient_name", true);
+  const itemName = interaction.options.getString("item_name", true);
+  const issuerName = interaction.options.getString("issuer_name");
+  const doseText = interaction.options.getString("dose_text");
   const code = interaction.options.getString("code");
 
   await interaction.deferReply();
