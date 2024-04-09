@@ -90,6 +90,34 @@ export const fetchMorningSalute = async () => {
 };
 
 /**
+ * @return {Promise<ResultEquipped<{text: string}, undefined>>}
+ */
+export const fetchToiletMode = async () => {
+  const url = new URL(RANDOM_THINGS_URL);
+  url.pathname = "/v1/toilet";
+
+  debug("request toilet mode %o", url);
+
+  try {
+    const response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${RANDOM_THINGS_APIKEY}`,
+      },
+    });
+
+    const body = await response.json();
+
+    debug("respond from toilet mode %o %o", url, body);
+
+    return equip(Ok(body));
+  } catch (ex) {
+    logger.error("failed to fetch toilet mode %o %o", url, ex);
+
+    return equip(Err(undefined));
+  }
+};
+
+/**
  * @param {'fire'} family
  * @param {string} text
  * @return {Promise<ResultEquipped<Buffer, string>>}

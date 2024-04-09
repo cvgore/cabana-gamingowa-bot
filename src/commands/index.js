@@ -11,6 +11,7 @@ import * as randomEvent from "./random-event/index.js";
 import * as owner from "./owner/index.js";
 import * as fonts from "./fonts/index.js";
 import * as eprescription from "./eprescription/index.js";
+import * as pooping from "./pooping/index.js";
 import { Collection } from "discord.js";
 import debugCtor from "debug";
 
@@ -29,7 +30,8 @@ const commands = [
   randomEvent,
   owner,
   fonts,
-  eprescription
+  eprescription,
+  pooping
 ];
 export const BOT_COMMANDS = new Collection(
   commands.map((cmd) => {
